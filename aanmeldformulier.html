@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <style>
+            input[type="text"] {
+                position: absolute; left: 200px;
+            }
+
+            input[type="checkbox"] {
+                position: absolute; left: 200px;
+            }
+
+            
+            label{
+                display:block;
+                padding-left: 220px;
+            }
+            
+
+
+            }
+            .checkbox{
+                align-content: 30px;
+            }
+            .button_klein {
+            background-color: lightseagreen;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            }
+
+            .button_klein:hover{
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+        </style>
+        <script>
+        </script>
+    </head>
+
+    <body>
+        <h1> Aanmeldformulier </h1>
+        <p> Voornaam: <input type="text" class="checkbox"> </p>    
+        <p> Achternaam: <input type="text" class="checkbox"></p>
+        
+        <div> Geslacht:
+        <div><input type="checkbox" id="man" name="man" class=button_klein>
+            <label for="man">Man</label> 
+        </div> </div>
+    
+        <div>
+            <input type="checkbox" id="vrouw" name="vrouw" class=button_klein>
+            <label for="vrouw">Vrouw</label>
+        </div>
+
+        <p> Leeftijd: <input type="text" class="checkbox"></p>
+        
+        <p> Email: <input type="text" class="checkbox"> </p>
+        
+        <p> Wachtwoord: <input type="text" class="checkbox"> </p>
+        
+        <p> Bevestig wachtwoord: <input type="text" class="checkbox">  </p>
+        
+        
+        <div> Wat wil je doen binnen de club? </div>
+        
+        <div>
+            <input type="checkbox" id="speler" name="speler" class=button_klein>
+                <label for="speler" class="optie">Speler</label>
+        </div>
+        <div>
+            <input type="checkbox" id="trainer" name="trainer" class=button_klein>
+                <label for="trainer" class="optie">Trainer</label>
+        </div>
+        <div>
+            <input type="checkbox" id="coach" name="coach" class=button_klein>
+            <label for="coach" class="optie">Coach</label>
+        </div>
+
+        <input type="button" value="Verstuur" class=button_klein>
+        <input type="button" value="Annuleer" class=button_klein>
+        
+    </body>
+</html>
