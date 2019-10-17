@@ -1,0 +1,53 @@
+<style>
+.welkom {
+        text-align: center;
+        font: 50px arial, sans-serif;
+}
+
+.text {
+    text-align: center;
+}
+
+.button_klein {
+        background-color: lightseagreen;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    .button_klein:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+</style>
+
+<script>
+    function inloggen(){
+        console.log("inlog")
+    }
+
+    function cancellen(){
+        console.log("terug naar home")
+    }
+
+</script>
+
+<body>
+    <h1 class="welkom">Inloggen</h1>
+    <p class="text">Voer hier uw e-mailadres in:</p>
+    <input type="text" id="username" align="center">
+    <p class="text">Voer uw wachtwoord in:</p>
+    <input type="text" id="wachtwoord" align="center">
+    <br></br>
+    <div class="text">
+        <input type="button" class="button_klein" value="Inloggen" onclick="inloggen()">
+        <input type="button" class="button_klein" value="Annuleren" onclick="cancellen()">
+    </div>
+    <div class="text">
+        
+    </div>    
+</body>
