@@ -1,4 +1,9 @@
 <style>
+    .welkom {
+        text-align: center;
+        font: 50px arial, sans-serif;
+    }
+    
     .button_klein {
         background-color: lightseagreen;
         border: none;
@@ -20,7 +25,10 @@
         color: white;
         padding: 15px 32px;
         font-size: 16px;
-
+        border: none;
+    }
+    .contact:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     }
     
 </style>
@@ -53,8 +61,8 @@
 
 </script>
 
-<body>
-    <h1>Welkom bij de club</h1>
+<body style=background-color:lightyellow>
+    <h1 class="welkom">Welkom bij de club</h1>
     <input type="button" class="button_klein" value="Aanmelden bij de club" onclick="aanmelden()">
     <input type="button" class="button_klein" value="Inloggen" onclick="inloggen()">
     <input type="button" class="button_klein" value="Teaminformatie" onclick="team()">
