@@ -30,30 +30,41 @@
     .contact:hover{
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     }
+
+    img {
+        width: 600px;
+        height: 400px;
+    }
     
 </style>
 
 <script>
     function aanmelden(){
+        window.location.href = 'aanmeldformulier.html';
         console.log("aanmelden")
     }
 
     function inloggen(){
+        window.location.href = 'inloggen.html';
         console.log("inloggen")
     }
 
     function team(){
+        window.location.href = 'teampagina.html';
         console.log("team pagina")
     }
 
     function wedstrijd(){
+        window.location.href = 'wedstrijd.html';
         console.log("wedstrijd")
     }
 
     function training() {
+        window.location.href = 'training.html';
         console.log("training")
     }
     function contact(){
+        window.location.href = 'contact.html';
         console.log("contact")
     }
 
@@ -70,9 +81,9 @@
     <input type="button" class="button_klein" value="Trainingsinformatie" onclick="training()">
 
     <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
+
+    <img src='welcome.jpg' alt="welkom Picture">
+
     <br></br>
 
     <input type="button" class="contact" value="Klik hier om een contact formulier in te vullen" onclick="contact()"></input>
