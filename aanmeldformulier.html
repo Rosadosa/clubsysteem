@@ -54,14 +54,44 @@
     }
         </style>
         <script>
+            function aanmelding(){
+                var amdObject = {};
+                amdObject.voornaam = document.getElementById("voornaam").value;
+                amdObject.achternaam = document.getElementById("achternaam").value;
+                amdObject.leeftijd = document.getElementById("leeftijd").value;
+                amdObject.email = document.getElementById("email").value;
+                // checken of wachtwoord en bevestig wachtwoord hetzelfde zijn
+                amdObject.wachtwoord = document.getElementById("wachtwoord").value;
+                // amdObject.bevestigwachtwoord = document.getElementById("bevestigwachtwoord").value;
+                // checkbox man en vrouw nog toevegen en zorgen dat er maar 1 optie kan worden aangeklikt;
+                // checkbox speler, coach, trainer nog toevoegen.
+                
+                var aanmeldingJSON = JSON.stringify(amdObject);
+                aanmeldVersturen(aanmeldingJSON);
+
+                function aanmeldVersturen(data){
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange=function(){
+                        if(this.readyState==4){
+                            console.log("het is verstuurd")
+                        }
+                    }
+                    xhr.open("POST", "http://localhost:8082/aanmelding", true);
+                    xhr.setRequestHeader("Content-type", "application/json");
+                    xhr.send(data);
+                }
+                
+            }
+
+        
         </script>
     </head>
 
     <body>
         <h1> Aanmeldformulier </h1>
-        <p> Voornaam: <input type="text" class="checkbox"> </p>    
-        <p> Achternaam: <input type="text" class="checkbox"></p>
-        
+        <p> Voornaam: <input type="text" class="checkbox" id="voornaam"> </p>    
+        <p> Achternaam: <input type="text" class="checkbox" id="achternaam"></p>
+       
         <div> Geslacht:
         <div><input type="checkbox" id="man" name="man" class=button_klein>
             <label for="man">Man</label> 
@@ -72,13 +102,13 @@
             <label for="vrouw">Vrouw</label>
         </div>
 
-        <p> Leeftijd: <input type="text" class="checkbox"></p>
+        <p> Leeftijd: <input type="text" class="checkbox" id="leeftijd"></p>
         
-        <p> Email: <input type="text" class="checkbox"> </p>
+        <p> Email: <input type="text" class="checkbox" id="email"> </p>
         
-        <p> Wachtwoord: <input type="text" class="checkbox"> </p>
+        <p> Wachtwoord: <input type="text" class="checkbox" id="wachtwoord"> </p>
         
-        <p> Bevestig wachtwoord: <input type="text" class="checkbox">  </p>
+        <p> Bevestig wachtwoord: <input type="text" class="checkbox" id="bevestigwachtwoord">  </p>
         
         
         <div> Wat wil je doen binnen de club? </div>
@@ -96,7 +126,7 @@
             <label for="coach" class="optie">Coach</label>
         </div>
 
-        <input type="button" value="Verstuur" class=button_klein>
+        <input type="button" value="Verstuur" class=button_klein onclick="aanmelding()">
         <input type="button" value="Annuleer" class=button_klein>
         
     </body>
