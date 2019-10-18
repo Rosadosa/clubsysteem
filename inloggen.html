@@ -6,6 +6,16 @@
 
 .text {
     text-align: center;
+    }
+
+p{
+    font: 18px arial, sans-serif;
+}
+
+.box{
+    display: table;
+    margin: 0 auto;
+    width: 300px;
 }
 
 .button_klein {
@@ -23,6 +33,8 @@
     .button_klein:hover{
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     }
+
+
 </style>
 
 <script>
@@ -39,9 +51,9 @@
 <body>
     <h1 class="welkom">Inloggen</h1>
     <p class="text">Voer hier uw e-mailadres in:</p>
-    <input type="text" id="username" align="center">
+    <input type="text" id="username" class="box">
     <p class="text">Voer uw wachtwoord in:</p>
-    <input type="text" id="wachtwoord" align="center">
+    <input type="text" id="wachtwoord" class="box">
     <br></br>
     <div class="text">
         <input type="button" class="button_klein" value="Inloggen" onclick="inloggen()">
