@@ -54,10 +54,21 @@
     }
         </style>
         <script>
+            
             function aanmelding(){
+                var geslacht;
                 var amdObject = {};
                 amdObject.voornaam = document.getElementById("voornaam").value;
                 amdObject.achternaam = document.getElementById("achternaam").value;
+
+                
+                
+
+                if (document.getElementsById("checkMan").checked == true){
+                    geslacht = document.getElementById("checkMan").value;
+                }
+                
+                
                 amdObject.leeftijd = document.getElementById("leeftijd").value;
                 amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
                 amdObject.email = document.getElementById("email").value;
@@ -86,6 +97,10 @@
                 
             }
 
+            function cancellen(){
+                window.location.href='index.html';
+            }
+
         
         </script>
     </head>
@@ -96,12 +111,12 @@
         <p> Achternaam: <input type="text" class="checkbox" id="achternaam"></p>
        
         <div> Geslacht:
-        <div><input type="checkbox" id="man" name="man" class=button_klein>
+        <div><input type="checkbox" id="checkMan" name="man" class=button_klein value = "man">
             <label for="man">Man</label> 
         </div> </div>
     
         <div>
-            <input type="checkbox" id="vrouw" name="vrouw" class=button_klein>
+            <input type="checkbox" id="checkVrouw" name="vrouw" class=button_klein value = "vrouw">
             <label for="vrouw">Vrouw</label>
         </div>
 
@@ -132,7 +147,7 @@
         </div>
 
         <input type="button" value="Verstuur" class=button_klein onclick="aanmelding()">
-        <input type="button" value="Annuleer" class=button_klein>
+        <input type="button" value="Annuleer" class=button_klein onclick="cancellen()">
         
     </body>
 </html>
