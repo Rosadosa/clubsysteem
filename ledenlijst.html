@@ -27,13 +27,36 @@
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange=function(){
             if(this.readyState==4){
-                leden_array = JSON.parse(this.responseText);
-                console.log(lijst);
+                var person = JSON.parse(this.responseText);
+                leden_array.push(person);
+                console.log(person);
+                Tabelmaken();
             }
         }
+        xhr.open("GET", "http://localhost:8082/ledenlijst", true)
+        xhr.send();
+
+        
+    }
+
+    function Tabelmaken(){
+        var perrow = 1; 
+        html = "<table><tr>";
+
+        for (var i=0; i<leden_array.length; i++){
+            html += "<td>" + leden_array[i] + "</td>";
+            var next = i+1;
+            if(next%perrow==0 && next!=leden_array.length) {
+                html += "</tr><tr>";
+            }
+        }
+        html += "<tr></table>"
+        document.getElementById("container").innerHTML = html;
+
     }
 </script>
 
 <body>
-
+    <input type="button", value="Vraag de ledenlijst op" onclick=getLeden()>
+    <div id="container"></div>
 </body>
