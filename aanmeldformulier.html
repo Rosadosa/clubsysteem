@@ -10,6 +10,11 @@
                 font: 18px arial, sans-serif;
             }
 
+            input[type="date"] {
+                position: absolute; left: 200px;
+                font: 18px arial, sans-serif;
+            }
+
             p{
                 font: 18px arial, sans-serif;
             }
@@ -32,10 +37,15 @@
             
 
 
-            }
+            
             .checkbox{
                 align-content: 30px;
             }
+
+            .geboortedatum{
+
+            }
+
             .button_klein {
             background-color: lightseagreen;
             border: none;
@@ -92,7 +102,7 @@
                 amdObject.voornaam = document.getElementById("voornaam").value;
                 amdObject.achternaam = document.getElementById("achternaam").value;         
                 amdObject.geslacht = geslacht;
-                amdObject.leeftijd = document.getElementById("leeftijd").value;
+                amdObject.geboortedatum = document.getElementById("geboortedatum").value;
                 amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
                 amdObject.email = document.getElementById("email").value;
                 //check invoeren dat e-mail een @teken bevat.
@@ -159,7 +169,7 @@
             <label for="vrouw">Vrouw</label>
         </div>
 
-        <p> Leeftijd: <input type="text" class="checkbox" id="leeftijd"></p>
+        <p> Geboortedatum: <input class="birthdate" type="date" placeholder="DD-MM-YYYY" date-date-split-input="false" id="geboortedatum"></p>
 
         <p> Telefoonnummer: <input type="text" class="checkbox" id="telefoonnummer"></p>
         
