@@ -54,21 +54,44 @@
     }
         </style>
         <script>
-            
+
+                                          
             function aanmelding(){
                 var geslacht;
+                
+                if (document.getElementById("checkMan").checked == true & document.getElementById("checkVrouw").checked == true){
+                    alert("Geslacht kan niet man en vrouw zijn.");
+                      
+                } else if (document.getElementById("checkVrouw").checked == true) {
+                    geslacht = "vrouw";
+                    console.log(geslacht);
+                } else if (document.getElementById("checkMan").checked == true){ 
+                    geslacht = "man";
+                    console.log(geslacht);
+                } else {}
+
+                var functies;
+                if (document.getElementById("speler").checked == true & document.getElementById("trainer").checked == false & document.getElementById("coach").checked == false){
+                    functies = "speler";
+                } else if (document.getElementById("trainer").checked == true & document.getElementById("speler").checked == false & document.getElementById("coach").checked == false){
+                    functies = "trainer";
+                } else if(document.getElementById("coach").checked == true & document.getElementById("trainer").checked == false & document.getElementById("speler").checked == false){
+                    functies = "coach";
+                } else if (document.getElementById("speler").checked == true & document.getElementById("trainer").checked == true & document.getElementById("coach").checked == false){
+                    functies = "speler en trainer"
+                } else if (document.getElementById("speler").checked == true & document.getElementById("coach").checked == true & document.getElementById("trainer").checked == false){
+                    functies = "speler en coach";
+                } else if (document.getElementById("trainer").checked == true & document.getElementById("coach").checked == true & document.getElementById("speler").checked == false){
+                    functies = "trainer en coach";
+                } else {
+                    functies = "speler, trainer en coach";
+                }
+
+                
                 var amdObject = {};
                 amdObject.voornaam = document.getElementById("voornaam").value;
-                amdObject.achternaam = document.getElementById("achternaam").value;
-
-                
-                
-
-                if (document.getElementsById("checkMan").checked == true){
-                    geslacht = document.getElementById("checkMan").value;
-                }
-                
-                
+                amdObject.achternaam = document.getElementById("achternaam").value;         
+                amdObject.geslacht = geslacht;
                 amdObject.leeftijd = document.getElementById("leeftijd").value;
                 amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
                 amdObject.email = document.getElementById("email").value;
@@ -80,8 +103,24 @@
                 // checkbox man en vrouw nog toevegen en zorgen dat er maar 1 optie kan worden aangeklikt;
                 // checkbox speler, coach, trainer nog toevoegen.
                 
+                amdObject.functies = functies;
                 var aanmeldingJSON = JSON.stringify(amdObject);
-                aanmeldVersturen(aanmeldingJSON);
+                console.log(aanmeldingJSON);
+
+                if (amdObject.voornaam != null & 
+                    amdObject.achternaam != null & 
+                    amdObject.geslacht != null & 
+                    amdObject.leeftijd != null  & 
+                    amdObject.telefoonnummer != null & 
+                    amdObject.email != null & 
+                    amdObject.wachtwoord != null & 
+                    amdObject.functies != null) {
+                    aanmeldVersturen(aanmeldingJSON);
+                } else {
+                    alert("Niet alle velden zijn ingevuld")
+                }
+                    
+                
 
                 function aanmeldVersturen(data){
                     var xhr = new XMLHttpRequest();
