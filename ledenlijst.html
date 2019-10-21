@@ -1,0 +1,74 @@
+<style>
+    .welkom {
+        text-align: center;
+        font: 50px arial, sans-serif;
+    }
+    
+    .button_klein {
+        background-color: lightseagreen;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    .button_klein:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+</style>
+
+<script>
+    var leden_array = [];
+
+    function getLeden(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(this.readyState==4){
+                var person = JSON.parse(this.responseText);
+                leden_array.push(person);
+                console.log(person);
+                constructTable('#table')
+            }
+        }
+        xhr.open("GET", "http://localhost:8082/ledenlijst", true)
+        xhr.send();       
+    }
+
+function createTable(){
+    var col = [];
+        for (var i = 0; i < leden_array.length; i++) {
+            for (var key in leden_array[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+}
+//https://www.encodedna.com/javascript/populate-json-data-to-html-table-using-javascript.htm
+    
+
+    // function makeTable(input_array){
+    //     // var parsed = JSON.parse(localStorage.getItem('test'))
+    //     // console.log(parsed);
+    //     var table="<tr><th>Fact</th><th>Length</th></tr>";
+    //     var x = parsed.getElementsByTagName("fact");
+    //         for (var i = 0; i <x.length; i++) {
+    //             table += "<tr><td>" + x[i].getElementsByTagName("fact")[0].childNodes[0].nodeValue + 
+    //             "</td><td>" + x[i].getElementsByTagName("length")[0].childNodes[0].nodeValue +    
+    //         "</td></tr>";                          
+    //         }
+    //     document.getElementById("myTable").innerHTML = table;
+    // }
+
+
+</script>
+
+<body>
+    <input type="button", value="Vraag de ledenlijst op" onclick=getLeden()>
+    <button onclick = "constructTable('#table')"> click here </button> 
+    <table align = "center" id="table" border="1"></table>
+</body>
