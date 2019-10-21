@@ -4,13 +4,16 @@
             h1{
                 font: 50px arial, sans-serif;
             }
-
             input[type="text"] {
                 position: absolute; left: 200px;
                 font: 18px arial, sans-serif;
             }
-
             input[type="date"] {
+                position: absolute; left: 200px;
+                font: 18px arial, sans-serif;
+            }
+
+            input[type="password"] {
                 position: absolute; left: 200px;
                 font: 18px arial, sans-serif;
             }
@@ -18,16 +21,13 @@
             p{
                 font: 18px arial, sans-serif;
             }
-
             div{
                 font: 18px arial, sans-serif;
             }
-
             input[type="checkbox"] {
                 position: absolute; left: 200px;
                 
             }
-
             
             label{
                 display:block;
@@ -35,16 +35,11 @@
                 font: 18px arial, sans-serif;
             }
             
-
-
             
             .checkbox{
                 align-content: 30px;
             }
-
-            .geboortedatum{
-
-            }
+            
 
             .button_klein {
             background-color: lightseagreen;
@@ -64,7 +59,6 @@
     }
         </style>
         <script>
-
                                           
             function aanmelding(){
                 var geslacht;
@@ -79,7 +73,6 @@
                     geslacht = "man";
                     console.log(geslacht);
                 } else {}
-
                 var functies;
                 if (document.getElementById("speler").checked == true & document.getElementById("trainer").checked == false & document.getElementById("coach").checked == false){
                     functies = "speler";
@@ -96,7 +89,6 @@
                 } else {
                     functies = "speler, trainer en coach";
                 }
-
                 
                 var amdObject = {};
                 amdObject.voornaam = document.getElementById("voornaam").value;
@@ -106,7 +98,6 @@
                 amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
                 amdObject.email = document.getElementById("email").value;
                 //check invoeren dat e-mail een @teken bevat.
-
                 // checken of wachtwoord en bevestig wachtwoord hetzelfde zijn
                 amdObject.wachtwoord = document.getElementById("wachtwoord").value;
                 // amdObject.bevestigwachtwoord = document.getElementById("bevestigwachtwoord").value;
@@ -114,9 +105,20 @@
                 // checkbox speler, coach, trainer nog toevoegen.
                 
                 amdObject.functies = functies;
-                var aanmeldingJSON = JSON.stringify(amdObject);
-                console.log(aanmeldingJSON);
 
+                if(wachtwoord.value != bevestigwachtwoord.value){
+                     alert("Bevestig wachtwoord en wachtwoord zijn verschillend");
+                     wachtwoord.value="";
+                     bevestigwachtwoord.value = "";
+                } else {
+                     amdObject.wachtwoord = document.getElementById("wachtwoord").value;
+                     var aanmeldingJSON = JSON.stringify(amdObject);
+                }
+
+
+            
+                
+                console.log(aanmeldingJSON);
                 if (amdObject.voornaam != null & 
                     amdObject.achternaam != null & 
                     amdObject.geslacht != null & 
@@ -131,7 +133,6 @@
                 }
                     
                 
-
                 function aanmeldVersturen(data){
                     var xhr = new XMLHttpRequest();
                     xhr.onreadystatechange=function(){
@@ -145,11 +146,9 @@
                 }
                 
             }
-
             function cancellen(){
                 window.location.href='index.html';
             }
-
         
         </script>
     </head>
@@ -175,9 +174,9 @@
         
         <p> Email: <input type="text" class="checkbox" id="email"> </p>
         
-        <p> Wachtwoord: <input type="text" class="checkbox" id="wachtwoord"> </p>
+        <p> Wachtwoord: <input type="password" class="checkbox" id="wachtwoord"> </p>
         
-        <p> Bevestig wachtwoord: <input type="text" class="checkbox" id="bevestigwachtwoord">  </p>
+        <p> Bevestig wachtwoord: <input type="password" class="checkbox" id="bevestigwachtwoord">  </p>
         
         
         <div> Wat wil je doen binnen de club? </div>
