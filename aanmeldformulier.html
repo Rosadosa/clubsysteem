@@ -24,11 +24,17 @@
         }
 
         function krijgNiveau() {
-            var ele = document.getElementsByName('niveau');
+            var ele = document.getElementsByName('niveau')
             for (i = 0; i < ele.length; i++) {
                 if (ele[i].checked)
                     return ele[i].value;
             }
+        }
+
+        function krijgRollen(input) {
+            if (document.getElementById(input).checked == true){
+                return true;
+                } else { return false;}
         }
 
         function aanmelding() {
@@ -50,7 +56,10 @@
             amdObject.wachtwoord = document.getElementById("wachtwoord").value;
             amdObject.positie = krijgPositie();
             amdObject.niveau = krijgNiveau();
-            amdObject.rollen = rollen;
+            amdObject.coach = krijgRollen("coach");
+            amdObject.trainer = krijgRollen("trainer");
+            amdObject.speler = krijgRollen("speler");
+
 
             if (wachtwoord.value != bevestigwachtwoord.value) {
                 alert("Bevestig wachtwoord en wachtwoord zijn verschillend");

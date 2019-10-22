@@ -2,57 +2,25 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 <head>
     <style>
-        .welkom {
-            text-align: center;
-            font: 50px arial, sans-serif;
-        }
-
-        .button_klein {
-            background-color: lightseagreen;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        .button_klein:hover {
-            box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        th,
-        td,
-        p,
-        input {
-            font: 14px Verdana;
-        }
-
-        table,
-        th,
-        td {
-            border: solid 1px #DDD;
-            border-collapse: collapse;
-            padding: 2px 3px;
-            text-align: center;
-        }
-
-        th {
-            font-weight: bold;
-        }
     </style>
 
     <script>
-        function getLeden() {
-            var api="/?niveau="+document.getElementById("niveau").value+"&geslacht="+document.getElementById("geslacht").value;
-            console.log(document.getElementById("niveau").value);
-            console.log(api);
 
+        $(document).ready(function () {
+            $('.dropdown').each(function (key, dropdown) {
+                var $dropdown = $(dropdown);
+                $dropdown.find('.dropdown-menu a').on('click', function () {
+                    $dropdown.find('button').text($(this).text()).append('<span class="caret"></span>');
+                });
+            });
+        });
+
+        function getLeden() {
+
+            var api = "/?niveau=" + document.getElementById("niveau").textContent + "&geslacht=" + document.getElementById("geslacht").textContent;
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
@@ -61,16 +29,17 @@
                 }
             }
 
-            var geefNiveau= "2eklasse";
-            var geefGeslacht="vrouw";
+            var geefNiveau = "2eklasse";
+            var geefGeslacht = "vrouw";
 
-            xhr.open("GET", "http://localhost:8082/ledenlijst/niveaugeslacht"+api, true)
+            xhr.open("GET", "http://localhost:8082/ledenlijst/niveaugeslacht" + api, true)
             xhr.send();
         }
 
         function createTable(leden_array) {
             var col = [];
             var table = document.createElement("table");
+            table.className = "table table-bordered";
             var tr = table.insertRow(-1);
 
             for (var i = 0; i < leden_array.length; i++) {
@@ -102,10 +71,39 @@
 </head>
 
 <body>
-    <input type="button" , value="Vraag de ledenlijst op" onclick=getLeden()>
-    Niveau: <input type="text" id="niveau">
-    Geslacht: <input type="text" id="geslacht">
-    
+    <h3>Kies hier onder waar je naar wilt zoeken:</h3>
+    <div class="row col-sm-offset-1">
+        <div class="col-sm-1">
+            <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="niveau">Klasse
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Hoofd klasse</a></li>
+                    <li><a href="#">Promotie klasse</a></li>
+                    <li><a href="#">1e klasse</a></li>
+                    <li><a href="#">2e klasse</a></li>
+                    <li><a href="#">3e klasse</a></li>
+                    <li><a href="#">Jeugd</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"
+                    id="geslacht">Geslacht
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Man</a></li>
+                    <li><a href="#">Vrouw</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <button class="btn btn-primary" onclick=getLeden()>Zoeken</button>
+        </div>
+
+    </div>
+
     <div type="divContainer" id="showData"></div>
 </body>
 
