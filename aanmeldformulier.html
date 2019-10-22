@@ -1,201 +1,233 @@
 <html>
-    <head>
-        <style>
-            h1{
-                font: 50px arial, sans-serif;
-            }
-            input[type="text"] {
-                position: absolute; left: 200px;
-                font: 18px arial, sans-serif;
-            }
-            input[type="date"] {
-                position: absolute; left: 200px;
-                font: 18px arial, sans-serif;
-            }
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-            input[type="password"] {
-                position: absolute; left: 200px;
-                font: 18px arial, sans-serif;
-            }
+<head>
+    <style>
+    </style>
+    <script>
 
-            p{
-                font: 18px arial, sans-serif;
-            }
-            div{
-                font: 18px arial, sans-serif;
-            }
-            input[type="checkbox"] {
-                position: absolute; left: 200px;
-                
-            }
-            
-            label{
-                display:block;
-                padding-left: 220px;
-                font: 18px arial, sans-serif;
-            }
-            
-            
-            .checkbox{
-                align-content: 30px;
-            }
-            
+        function aanmelding() {
+            var geslacht;
+            if (document.getElementById("vrouw").checked == true) {
+                geslacht = "vrouw";
+                console.log(geslacht);
+            } else if (document.getElementById("man").checked == true) {
+                geslacht = "man";
+                console.log(geslacht);
+            } else { }
 
-            .button_klein {
-            background-color: lightseagreen;
-            border: none;
-            color: white;
-            padding: 15px 70px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            }
+            var rollen = [];
+            if (document.getElementById("speler").checked == true)                 
+                rollen.push("speler");
+            if (document.getElementById("coach").checked == true)
+                rollen.push("coach");  
+            if (document.getElementById("trainer").checked == true)
+                rollen.push("trainer");  
 
-            .button_klein:hover{
-            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-    }
-        </style>
-        <script>
-                                          
-            function aanmelding(){
-                var geslacht;
-                
-                if (document.getElementById("checkMan").checked == true & document.getElementById("checkVrouw").checked == true){
-                    alert("Geslacht kan niet man en vrouw zijn.");
-                      
-                } else if (document.getElementById("checkVrouw").checked == true) {
-                    geslacht = "vrouw";
-                    console.log(geslacht);
-                } else if (document.getElementById("checkMan").checked == true){ 
-                    geslacht = "man";
-                    console.log(geslacht);
-                } else {}
-                var functies;
-                if (document.getElementById("speler").checked == true & document.getElementById("trainer").checked == false & document.getElementById("coach").checked == false){
-                    functies = "speler";
-                } else if (document.getElementById("trainer").checked == true & document.getElementById("speler").checked == false & document.getElementById("coach").checked == false){
-                    functies = "trainer";
-                } else if(document.getElementById("coach").checked == true & document.getElementById("trainer").checked == false & document.getElementById("speler").checked == false){
-                    functies = "coach";
-                } else if (document.getElementById("speler").checked == true & document.getElementById("trainer").checked == true & document.getElementById("coach").checked == false){
-                    functies = "speler en trainer"
-                } else if (document.getElementById("speler").checked == true & document.getElementById("coach").checked == true & document.getElementById("trainer").checked == false){
-                    functies = "speler en coach";
-                } else if (document.getElementById("trainer").checked == true & document.getElementById("coach").checked == true & document.getElementById("speler").checked == false){
-                    functies = "trainer en coach";
-                } else {
-                    functies = "speler, trainer en coach";
-                }
-                
-                var amdObject = {};
-                amdObject.voornaam = document.getElementById("voornaam").value;
-                amdObject.achternaam = document.getElementById("achternaam").value;         
-                amdObject.geslacht = geslacht;
-                amdObject.geboortedatum = document.getElementById("geboortedatum").value;
-                amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
-                amdObject.email = document.getElementById("email").value;
-                //check invoeren dat e-mail een @teken bevat.
-                // checken of wachtwoord en bevestig wachtwoord hetzelfde zijn
+            var amdObject = {};
+            amdObject.voornaam = document.getElementById("voornaam").value;
+            amdObject.achternaam = document.getElementById("achternaam").value;
+            amdObject.geslacht = geslacht;
+            amdObject.geboortedatum = document.getElementById("geboortedatum").value;
+            amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
+            amdObject.email = document.getElementById("email").value;
+            amdObject.wachtwoord = document.getElementById("wachtwoord").value;
+            amdObject.rollen = rollen;
+            //amdObject.posities = positie;
+
+            if (wachtwoord.value != bevestigwachtwoord.value) {
+                alert("Bevestig wachtwoord en wachtwoord zijn verschillend");
+                wachtwoord.value = "";
+                bevestigwachtwoord.value = "";
+            } else {
                 amdObject.wachtwoord = document.getElementById("wachtwoord").value;
-                // amdObject.bevestigwachtwoord = document.getElementById("bevestigwachtwoord").value;
-                // checkbox man en vrouw nog toevegen en zorgen dat er maar 1 optie kan worden aangeklikt;
-                // checkbox speler, coach, trainer nog toevoegen.
-                
-                amdObject.functies = functies;
-
-                if(wachtwoord.value != bevestigwachtwoord.value){
-                     alert("Bevestig wachtwoord en wachtwoord zijn verschillend");
-                     wachtwoord.value="";
-                     bevestigwachtwoord.value = "";
-                } else {
-                     amdObject.wachtwoord = document.getElementById("wachtwoord").value;
-                     var aanmeldingJSON = JSON.stringify(amdObject);
-                }
+                var aanmeldingJSON = JSON.stringify(amdObject);
+            }
 
 
-            
-                
-                console.log(aanmeldingJSON);
-                if (amdObject.voornaam != null & 
-                    amdObject.achternaam != null & 
-                    amdObject.geslacht != null & 
-                    amdObject.geboortedatum != null  & 
-                    amdObject.telefoonnummer != null & 
-                    amdObject.email != null & 
-                    amdObject.wachtwoord != null & 
-                    amdObject.functies != null) {
-                    aanmeldVersturen(aanmeldingJSON);
-                } else {
-                    alert("Niet alle velden zijn ingevuld")
-                }
-                    
-                
-                function aanmeldVersturen(data){
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange=function(){
-                        if(this.readyState==4){
-                            console.log("het is verstuurd")
-                        }
+
+
+            console.log(aanmeldingJSON);
+            if (amdObject.voornaam != null &
+                amdObject.achternaam != null &
+                amdObject.geslacht != null &
+                amdObject.geboortedatum != null &
+                amdObject.telefoonnummer != null &
+                amdObject.email != null &
+                amdObject.wachtwoord != null &
+                amdObject.functies != null) {
+                aanmeldVersturen(aanmeldingJSON);
+            } else {
+                alert("Niet alle velden zijn ingevuld")
+            }
+
+
+            function aanmeldVersturen(data) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        console.log("het is verstuurd")
                     }
-                    xhr.open("POST", "http://localhost:8082/aanmelding", true);
-                    xhr.setRequestHeader("Content-Type", "application/json");
-                    xhr.send(data);
                 }
-                
+                xhr.open("POST", "http://localhost:8082/aanmelding", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(data);
             }
-            function cancellen(){
-                window.location.href='index.html';
-            }
-        
-        </script>
-    </head>
 
-    <body>
-        <h1> Aanmeldformulier </h1>
-        <p> Voornaam: <input type="text" class="checkbox" id="voornaam"> </p>    
-        <p> Achternaam: <input type="text" class="checkbox" id="achternaam"></p>
-       
-        <div> Geslacht:
-        <div><input type="checkbox" id="checkMan" name="man" class=button_klein value = "man">
-            <label for="man">Man</label> 
-        </div> </div>
-    
-        <div>
-            <input type="checkbox" id="checkVrouw" name="vrouw" class=button_klein value = "vrouw">
-            <label for="vrouw">Vrouw</label>
+        }
+        function cancellen() {
+            window.location.href = 'index.html';
+        }
+
+    </script>
+</head>
+
+<body>
+    <h2 class="text-center">Aanmeldformulier</h2>
+    <form class="form-horizontal" action="/action_page.php">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="voornaam">Voornaam:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="voornaam" placeholder="Vul voornaam in">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="achternaam">Achternaam:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="achternaam" placeholder="Vul achternaam in">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="geslacht">Geslacht:</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label for="man"><input type="radio" name="geslacht" id="man"> Man</label>
+                </div>
+                <div class="radio">
+                    <label for="vrouw"><input type="radio" name="geslacht" id="vrouw"> Vrouw</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="geboortedatum">Geboortedatum:</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="geboortedatum">
+            </div>
         </div>
 
-        <p> Geboortedatum: <input class="birthdate" type="date" placeholder="DD-MM-YYYY" date-date-split-input="false" id="geboortedatum"></p>
-
-        <p> Telefoonnummer: <input type="text" class="checkbox" id="telefoonnummer"></p>
-        
-        <p> Email: <input type="text" class="checkbox" id="email"> </p>
-        
-        <p> Wachtwoord: <input type="password" class="checkbox" id="wachtwoord"> </p>
-        
-        <p> Bevestig wachtwoord: <input type="password" class="checkbox" id="bevestigwachtwoord">  </p>
-        
-        
-        <div> Wat wil je doen binnen de club? </div>
-        
-        <div>
-            <input type="checkbox" id="speler" name="speler" class=button_klein>
-                <label for="speler" class="optie">Speler</label>
-        </div>
-        <div>
-            <input type="checkbox" id="trainer" name="trainer" class=button_klein>
-                <label for="trainer" class="optie">Trainer</label>
-        </div>
-        <div>
-            <input type="checkbox" id="coach" name="coach" class=button_klein>
-            <label for="coach" class="optie">Coach</label>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="telefoonnummer">Telefoonnummer:</label>
+            <div class="col-sm-10">
+                <input type="tel" class="form-control" id="telefoonnummer" placeholder="Vul telefoonnummer in">
+            </div>
         </div>
 
-        <input type="button" value="Verstuur" class=button_klein onclick="aanmelding()">
-        <input type="button" value="Annuleer" class=button_klein onclick="cancellen()">
-        
-    </body>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="email">E-mail adres:</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" placeholder="Vul e-mail adres in">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="rollen">Wat wil je doen binnen de club?:</label>
+            <div class="col-sm-10">
+                <div class="checkbox">
+                    <label for="speler"><input type="checkbox" id="speler">Speler</label>
+                </div>
+                <div class="checkbox">
+                    <label for="trainer"><input type="checkbox" id="trainer">Trainer</label>
+                </div>
+                <div class="checkbox">
+                    <label for="coach"><input type="checkbox" id="coach">Coach</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="niveau">Gewenste speelniveau:</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label for="hoofdklasse"><input type="radio" name="niveau" id="hoofdklasse"> Hoofdklasse</label>
+                </div>
+                <div class="radio">
+                    <label for="promotieklasse"><input type="radio" name="niveau" id="promotieklasse"> Promotie
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="eersteklasse"><input type="radio" name="niveau" id="eersteklasse"> Eerste
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="tweedeklasse"><input type="radio" name="niveau" id="tweedeklasse"> Tweede
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="derdeklasse"><input type="radio" name="niveau" id="derdeklasse"> Derde Klasse</label>
+                </div>
+                <div class="radio">
+                        <label for="nooit"><input type="radio" name="niveau" id="nooit"> Nog nooit eerder gevolleybald, dus ik weet het niet</label>
+                </div>
+                <div class="radio">
+                    <label for="jeugd"><input type="radio" name="niveau" id="jeugd"> Jeugd</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="positie">Voorkeurspositie:</label>
+            <div class="col-sm-10">
+                <div class="checkbox">
+                    <label for="spelverdeler"><input type="checkbox" id="spelverdeler"> Spelverdeler</label>
+                </div>
+                <div class="checkbox">
+                    <label for="passerloper"><input type="checkbox" id="passerloper"> Passer Loper</label>
+                </div>
+                <div class="checkbox">
+                    <label for="midden"><input type="checkbox" id="midden"> Midden</label>
+                </div>
+                <div class="checkbox">
+                    <label for="diagonaal"><input type="checkbox" id="diagonaal"> Diagonaal</label>
+                </div>
+                <div class="checkbox">
+                    <label for="libero"><input type="checkbox" id="libero"> Libero</label>
+                </div>
+                <div class="checkbox">
+                    <label for="geenvoorkeur"><input type="checkbox" id="geenvoorkeur"> Geen Voorkeur</label>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="wachtwoord">Wachtwoord:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="wachtwoord" placeholder="Voer een wachtwoord in">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="bevestigwachtwoord">Bevestig wachtwoord:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="bevestigwachtwoord" placeholder="Bevestig wachtwoord">
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-primary" onclick="aanmelding()">Verstuur</button>
+                <button type="button" class="btn btn-primary" onclick="cancellen()">Annuleer</button>
+            </div>
+        </div>
+    </form>
+
+
+</body>
+
 </html>
