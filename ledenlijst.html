@@ -4,47 +4,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <head>
     <style>
-        .welkom {
-            text-align: center;
-            font: 50px arial, sans-serif;
-        }
-
-        .button_klein {
-            background-color: lightseagreen;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        .button_klein:hover {
-            box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        th,
-        td,
-        p,
-        input {
-            font: 14px Verdana;
-        }
-
-        table,
-        th,
-        td {
-            border: solid 1px #DDD;
-            border-collapse: collapse;
-            padding: 2px 3px;
-            text-align: center;
-        }
-
-        th {
-            font-weight: bold;
-        }
     </style>
 
     <script>
@@ -63,6 +22,7 @@
         function createTable(leden_array) {
             var col = [];
             var table = document.createElement("table");
+            table.className="table table-bordered";
             var tr = table.insertRow(-1);
 
             for (var i = 0; i < leden_array.length; i++) {
@@ -94,7 +54,7 @@
 </head>
 
 <body>
-    <input type="button" , value="Vraag de ledenlijst op" onclick=getLeden()>
+    <button type="button" class="btn btn-primary" onclick=getLeden()>Vraag de ledenlijst op</button>
     <div type="divContainer" id="showData"></div>
 </body>
 

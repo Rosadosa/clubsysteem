@@ -7,35 +7,59 @@
     <style>
     </style>
     <script>
+        function krijgGeslacht() {
+            var ele = document.getElementsByName('geslacht');
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
+        function krijgPositie() {
+            var ele = document.getElementsByName('positie');
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
+        function krijgNiveau() {
+            var ele = document.getElementsByName('niveau')
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
+        function krijgRollen(input) {
+            if (document.getElementById(input).checked == true){
+                return true;
+                } else { return false;}
+        }
 
         function aanmelding() {
-            var geslacht;
-            if (document.getElementById("vrouw").checked == true) {
-                geslacht = "vrouw";
-                console.log(geslacht);
-            } else if (document.getElementById("man").checked == true) {
-                geslacht = "man";
-                console.log(geslacht);
-            } else { }
-
             var rollen = [];
-            if (document.getElementById("speler").checked == true)                 
+            if (document.getElementById("speler").checked == true)
                 rollen.push("speler");
             if (document.getElementById("coach").checked == true)
-                rollen.push("coach");  
+                rollen.push("coach");
             if (document.getElementById("trainer").checked == true)
-                rollen.push("trainer");  
+                rollen.push("trainer");
 
             var amdObject = {};
             amdObject.voornaam = document.getElementById("voornaam").value;
             amdObject.achternaam = document.getElementById("achternaam").value;
-            amdObject.geslacht = geslacht;
+            amdObject.geslacht = krijgGeslacht();
             amdObject.geboortedatum = document.getElementById("geboortedatum").value;
             amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
             amdObject.email = document.getElementById("email").value;
             amdObject.wachtwoord = document.getElementById("wachtwoord").value;
-            amdObject.rollen = rollen;
-            //amdObject.posities = positie;
+            amdObject.positie = krijgPositie();
+            amdObject.niveau = krijgNiveau();
+            amdObject.coach = krijgRollen("coach");
+            amdObject.trainer = krijgRollen("trainer");
+            amdObject.speler = krijgRollen("speler");
+
 
             if (wachtwoord.value != bevestigwachtwoord.value) {
                 alert("Bevestig wachtwoord en wachtwoord zijn verschillend");
@@ -45,9 +69,7 @@
                 amdObject.wachtwoord = document.getElementById("wachtwoord").value;
                 var aanmeldingJSON = JSON.stringify(amdObject);
             }
-
-
-
+            console.log(amdObject);
 
             console.log(aanmeldingJSON);
             if (amdObject.voornaam != null &
@@ -86,48 +108,49 @@
 
 <body>
     <h2 class="text-center">Aanmeldformulier</h2>
-    <form class="form-horizontal" action="/action_page.php">
+
+    <form class="form-horizontal" class="was-validated">
         <div class="form-group">
             <label class="control-label col-sm-2" for="voornaam">Voornaam:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="voornaam" placeholder="Vul voornaam in">
+                <input type="text" class="form-control" id="voornaam" placeholder="Vul voornaam in" required>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="achternaam">Achternaam:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="achternaam" placeholder="Vul achternaam in">
+                <input type="text" class="form-control" id="achternaam" placeholder="Vul achternaam in" required>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="geslacht">Geslacht:</label>
             <div class="col-sm-10">
                 <div class="radio">
-                    <label for="man"><input type="radio" name="geslacht" id="man"> Man</label>
+                    <label for="man"><input type="radio" name="geslacht" value="man" required> Man</label>
                 </div>
                 <div class="radio">
-                    <label for="vrouw"><input type="radio" name="geslacht" id="vrouw"> Vrouw</label>
+                    <label for="vrouw"><input type="radio" name="geslacht" value="vrouw" required> Vrouw</label>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="geboortedatum">Geboortedatum:</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" id="geboortedatum">
+                <input type="date" class="form-control" id="geboortedatum" required>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="telefoonnummer">Telefoonnummer:</label>
             <div class="col-sm-10">
-                <input type="tel" class="form-control" id="telefoonnummer" placeholder="Vul telefoonnummer in">
+                <input type="tel" class="form-control" id="telefoonnummer" placeholder="Vul telefoonnummer in" required>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="email">E-mail adres:</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" placeholder="Vul e-mail adres in">
+                <input type="email" class="form-control" id="email" placeholder="Vul e-mail adres in" required>
             </div>
         </div>
 
@@ -135,13 +158,13 @@
             <label class="control-label col-sm-2" for="rollen">Wat wil je doen binnen de club?:</label>
             <div class="col-sm-10">
                 <div class="checkbox">
-                    <label for="speler"><input type="checkbox" id="speler">Speler</label>
+                    <label for="speler"><input type="checkbox" name = "rollen" id="speler" >Speler</label>
                 </div>
                 <div class="checkbox">
-                    <label for="trainer"><input type="checkbox" id="trainer">Trainer</label>
+                    <label for="trainer"><input type="checkbox" name = "rollen" id="trainer" >Trainer</label>
                 </div>
                 <div class="checkbox">
-                    <label for="coach"><input type="checkbox" id="coach">Coach</label>
+                    <label for="coach"><input type="checkbox" name = "rollen" id="coach" >Coach</label>
                 </div>
             </div>
         </div>
@@ -150,28 +173,29 @@
             <label class="control-label col-sm-2" for="niveau">Gewenste speelniveau:</label>
             <div class="col-sm-10">
                 <div class="radio">
-                    <label for="hoofdklasse"><input type="radio" name="niveau" id="hoofdklasse"> Hoofdklasse</label>
+                    <label for="hoofdklasse"><input type="radio" name="niveau" value="hoofd klasse" > Hoofdklasse</label>
                 </div>
                 <div class="radio">
-                    <label for="promotieklasse"><input type="radio" name="niveau" id="promotieklasse"> Promotie
+                    <label for="promotieklasse"><input type="radio" name="niveau" value="promotie klasse" > Promotie
                         Klasse</label>
                 </div>
                 <div class="radio">
-                    <label for="eersteklasse"><input type="radio" name="niveau" id="eersteklasse"> Eerste
+                    <label for="eersteklasse"><input type="radio" name="niveau" value="1e klasse" > 1e
                         Klasse</label>
                 </div>
                 <div class="radio">
-                    <label for="tweedeklasse"><input type="radio" name="niveau" id="tweedeklasse"> Tweede
+                    <label for="tweedeklasse"><input type="radio" name="niveau" value="2e klasse" > 2e
                         Klasse</label>
                 </div>
                 <div class="radio">
-                    <label for="derdeklasse"><input type="radio" name="niveau" id="derdeklasse"> Derde Klasse</label>
+                    <label for="derdeklasse"><input type="radio" name="niveau" value="3e klasse" > 3e Klasse</label>
                 </div>
                 <div class="radio">
-                        <label for="nooit"><input type="radio" name="niveau" id="nooit"> Nog nooit eerder gevolleybald, dus ik weet het niet</label>
+                    <label for="nooit"><input type="radio" name="niveau" value="nooit" > Nog nooit eerder gevolleybald,
+                        dus ik weet het niet</label>
                 </div>
                 <div class="radio">
-                    <label for="jeugd"><input type="radio" name="niveau" id="jeugd"> Jeugd</label>
+                    <label for="jeugd"><input type="radio" name="niveau" value="jeugd" > Jeugd</label>
                 </div>
             </div>
         </div>
@@ -180,44 +204,39 @@
             <label class="control-label col-sm-2" for="positie">Voorkeurspositie:</label>
             <div class="col-sm-10">
                 <div class="checkbox">
-                    <label for="spelverdeler"><input type="checkbox" id="spelverdeler"> Spelverdeler</label>
+                    <label for="spelverdeler"><input type="checkbox" id="spelverdeler" value="spelverdeler" name ="positie"> Spelverdeler</label>
                 </div>
                 <div class="checkbox">
-                    <label for="passerloper"><input type="checkbox" id="passerloper"> Passer Loper</label>
+                    <label for="passerloper"><input type="checkbox" id="passerloper" value="passerloper" name ="positie"> Passer Loper</label>
                 </div>
                 <div class="checkbox">
-                    <label for="midden"><input type="checkbox" id="midden"> Midden</label>
+                    <label for="midden"><input type="checkbox" id="midden" value="midden" name ="positie"> Midden</label>
                 </div>
                 <div class="checkbox">
-                    <label for="diagonaal"><input type="checkbox" id="diagonaal"> Diagonaal</label>
+                    <label for="diagonaal"><input type="checkbox" id="diagonaal" value="diagonaal" name ="positie"> Diagonaal</label>
                 </div>
                 <div class="checkbox">
-                    <label for="libero"><input type="checkbox" id="libero"> Libero</label>
+                    <label for="libero"><input type="checkbox" id="libero" value="libero" name ="positie"> Libero</label>
                 </div>
                 <div class="checkbox">
-                    <label for="geenvoorkeur"><input type="checkbox" id="geenvoorkeur"> Geen Voorkeur</label>
+                    <label for="geenvoorkeur"><input type="checkbox" id="geenvoorkeur" value="geen voorkeur" name ="positie"> Geen Voorkeur</label>
                 </div>
             </div>
         </div>
 
-
-
-
         <div class="form-group">
             <label class="control-label col-sm-2" for="wachtwoord">Wachtwoord:</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="wachtwoord" placeholder="Voer een wachtwoord in">
+                <input type="password" class="form-control" id="wachtwoord" placeholder="Voer een wachtwoord in" required>
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label col-sm-2" for="bevestigwachtwoord">Bevestig wachtwoord:</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="bevestigwachtwoord" placeholder="Bevestig wachtwoord">
+                <input type="password" class="form-control" id="bevestigwachtwoord" placeholder="Bevestig wachtwoord" required>
             </div>
         </div>
-
-
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
