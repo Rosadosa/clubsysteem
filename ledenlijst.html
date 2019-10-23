@@ -2,10 +2,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
 <script src="JavaScript.js"></script>
 <head>
     <style>
+        .btn-primary{
+            background-color: darkcyan;
+        }
     </style>
 
     <script>
@@ -24,7 +26,7 @@
         function createTable(leden_array) {
             var col = [];
             var table = document.createElement("table");
-            table.className="table table-bordered";
+            table.className = "table table-bordered";
             var tr = table.insertRow(-1);
 
             for (var i = 0; i < leden_array.length; i++) {
