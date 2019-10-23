@@ -5,39 +5,11 @@
 
 <head>
     <style>
-        .welkom {
-            text-align: center;
-            font: 50px arial, sans-serif;
+        .btn-primary {
+            background-color: darkcyan;
         }
 
-        .text {
-            text-align: center;
-        }
-
-        p {
-            font: 18px arial, sans-serif;
-        }
-
-        .box {
-            display: table;
-            margin: 0 auto;
-            width: 300px;
-        }
-
-        .button_klein {
-            background-color: lightseagreen;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        .button_klein:hover {
+        .btn-primary:hover {
             box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
         }
     </style>
@@ -56,19 +28,26 @@
 </head>
 
 <body>
-    <h1 class="welkom">Inloggen</h1>
-    <p class="text">Voer hier uw e-mailadres in:</p>
-    <input type="text" id="username" class="box">
-    <p class="text">Voer uw wachtwoord in:</p>
-    <input type="text" id="wachtwoord" class="box">
-    <br></br>
-    <div class="text">
-        <input type="button" class="button_klein" value="Inloggen" onclick="inloggen()">
-        <input type="button" class="button_klein" value="Annuleren" onclick="cancellen()">
-    </div>
-    <div class="text">
+    <h2 class="text-center">Inloggen</h2>
+    <form>
+        <div class="form-group text-center">
+            <label for="inlogemail">Voer uw email adres in:</label>
+            <div>
+                <input type="text" class="form-control" id="inlogemail" placeholder="email adres">
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <label>Voer uw wachtwoord:</label>
+            <div>
+                <input type="text" class="form-control" id="wachtwoord" placeholder="wachtwoord">
+            </div>
+        </div>
 
-    </div>
+        <div class="text-center">
+                <input type="button" class="btn btn-primary" value="Inloggen" onclick="inloggen()">
+                <input type="button" class="btn btn-primary" value="Annuleren" onclick="cancellen()">
+            </div>
+    </form>
 </body>
 
 </html>
