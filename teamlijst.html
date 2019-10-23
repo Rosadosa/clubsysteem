@@ -5,13 +5,13 @@
 
 <head>
     <style>
-       .btn-primary{
+        .btn-primary {
             background-color: darkcyan;
         }
     </style>
 
     <script>
-        function getLeden() {
+        function getTeams() {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
@@ -19,14 +19,14 @@
                     createTable(leden)
                 }
             }
-            xhr.open("GET", "http://localhost:8082/ledenlijst", true)
+            xhr.open("GET", "http://localhost:8082/teamlijst", true)
             xhr.send();
         }
 
         function createTable(leden_array) {
             var col = [];
             var table = document.createElement("table");
-            table.className = "table table-bordered table-sm table-hover ";
+            table.className = "table table-bordered";
             var tr = table.insertRow(-1);
 
             for (var i = 0; i < leden_array.length; i++) {
@@ -39,7 +39,6 @@
 
             for (var i = 0; i < col.length; i++) {
                 var th = document.createElement("th");
-                //th.className = "thead-dark"
                 th.innerHTML = col[i];
                 tr.appendChild(th);
             }
@@ -59,8 +58,8 @@
 </head>
 
 <body>
-    <button type="button" class="btn btn-primary" onclick=getLeden()>Vraag de ledenlijst op</button>
-    <div type="divContainer" id="showData"></div>
-</body>
+        <button type="button" class="btn btn-primary" onclick=getTeams()>Vraag de teamlijst op</button>
+        <div type="divContainer" id="showData"></div>
+    </body>
 
 </html>
