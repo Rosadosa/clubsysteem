@@ -1,0 +1,180 @@
+<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src= JavaScript.js></script>
+
+<head>
+    <style>
+    </style>
+    <script>
+
+        function krijgCompetitie() {
+            if (document.getElementById("ja").checked == true){
+                return true;
+                } else { return false;}
+        }
+
+        function krijgTeamtype() {
+            var ele = document.getElementsByName('teamtype');
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked) {
+                    return ele[i].value;
+                }
+            }
+        }
+            
+        function krijgNiveau() {
+            var ele = document.getElementsByName('niveau')
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
+        function aanmaakTeam() {
+            var teamObject = {};
+
+            teamObject.teamnaam = document.getElementById("teamnaam").value;
+            teamObject.trainer = document.getElementById("trainer").value;
+            teamObject.competitie = krijgCompetitie();
+            teamObject.coach = document.getElementById("coach").value;
+            teamObject.teamtype = krijgTeamtype();
+            teamObject.niveau = krijgNiveau();
+
+            var teamJSON = JSON.stringify(teamObject);
+        
+            console.log(teamObject);
+
+            // $("div.radio").click(function(){
+            //     $("div.form-group").toggle();
+            // });
+
+            if (teamObject.competitie == true){
+                console.log("competite klopt")
+                if(teamObject.teamnaam!= "" &
+                    teamObject.trainer!="" &
+                    teamObject.coach!="" &
+                    teamObject.teamtype!=null&
+                    teamObject.niveau!=null){
+                        teamVersturen(teamJSON);
+                    } else {
+                        alert("niet alle velden zijn ingevuld")
+                    }
+                } else {
+                    console.log("competitie niet")
+                    if (teamObject.teamnaam!= "" &
+                            teamObject.trainer!=""){
+                                teamVersturen(teamJSON);
+                    } else {
+                        alert("trainer of teamnaam is niet ingevuld")
+                    }
+                } 
+
+
+            function teamVersturen(data) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        console.log("team is verstuurd")
+                    }
+                }
+                xhr.open("POST", "http://localhost:8082/team", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(data);
+            }
+
+        }
+        function cancellen() {
+            window.location.href = 'index.html';
+        }
+
+    </script>
+</head>
+
+<body>
+    <h2 class="text-center">Teamformulier</h2>
+
+    <form class="form-horizontal" class="was-validated">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="teamnaam">Teamnaam:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="teamnaam" placeholder="Vul teamnaam in" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="trainer">Trainer:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="trainer" placeholder="Vul naam trainer in" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="competitie">Competitie:</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label for="ja"><input type="radio" name="competitie" id="ja" value="ja" required> Ja </label>
+                </div>
+                <div class="radio">
+                    <label for="nee"><input type="radio" name="competitie" id="nee" value="nee" required> Nee </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="coach">Coach:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="coach" placeholder="Vul naam coach in" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="teamtype">Teamtype:</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label for="dames"><input type="radio" name="teamtype" value="dames"> Dames </label>
+                </div>
+                <div class="radio">
+                    <label for="heren"><input type="radio" name="teamtype" value="heren"> Heren </label>
+                </div>
+                <div class="radio">
+                    <label for="jeugd"><input type="radio" name="teamtype" value="jeugd"> Jeugd</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="niveau">Speelniveau:</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label for="hoofdklasse"><input type="radio" name="niveau" value="hoofd klasse"> Hoofdklasse</label>
+                </div>
+                <div class="radio">
+                    <label for="promotieklasse"><input type="radio" name="niveau" value="promotie klasse"> Promotie
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="eersteklasse"><input type="radio" name="niveau" value="1e klasse"> 1e
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="tweedeklasse"><input type="radio" name="niveau" value="2e klasse"> 2e
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="derdeklasse"><input type="radio" name="niveau" value="3e klasse"> 3e Klasse</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-primary" onclick="aanmaakTeam()">Maak team aan</button>
+                    <button type="button" class="btn btn-primary" onclick="cancellen()">Annuleer</button>
+                </div>
+            </div>
+
+    </form>
+
+
+</body>
+
+</html>
