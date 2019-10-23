@@ -2,46 +2,26 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 <head>
 
     <style>
-        .welkom {
-            text-align: center;
-            font: 50px arial, sans-serif;
-        }
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
 
-        .button_klein {
-            background-color: lightseagreen;
-            border: none;
             color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        .button_klein:hover {
-            box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        .contact {
-            background-color: lightseagreen;
-            color: white;
-            padding: 15px 32px;
-            font-size: 16px;
-            border: none;
-        }
-
-        .contact:hover {
-            box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
         }
 
         img {
             width: 600px;
             height: 400px;
+        }
+
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
         }
     </style>
 
@@ -81,21 +61,64 @@
 </head>
 
 <body style=background-color:lightyellow>
-    <h1 class="welkom">Welkom bij de club</h1>
-    <input type="button" class="button_klein" value="Aanmelden bij de club" onclick="aanmelden()">
-    <input type="button" class="button_klein" value="Inloggen" onclick="inloggen()">
-    <input type="button" class="button_klein" value="Teaminformatie" onclick="team()">
-    <input type="button" class="button_klein" value="Wedstrijdinformatie" onclick="wedstrijd()">
-    <input type="button" class="button_klein" value="Trainingsinformatie" onclick="training()">
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#" onclick="aanmelden()">Aanmelden bij de club</a></li>
+                    <li><a href="#" onclick="team()">Teaminformatie</a></li>
+                    <li><a href="#" onclick="wedstrijd()">Wedstrijdinformatie</a></li>
+                    <li><a href="#" onclick="training()">Trainingsinformatie</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" onclick="inloggen()"><span class="glyphicon glyphicon-log-in"></span> Inloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <div class="col-sm-2 sidenav">
+                <p><a href="#">Mogelijk dingen hier</a></p>
+            </div>
+            <div class="col-sm-8 text-left">
+                <h1>Welkom bij de club!</h1>
+                <img src='welcome.jpg' alt="welkom Picture">
+                <hr>
+                <h3>Meld je nu aan!</h3>
+                <p>Het is vanaf nu mogelijk je aan te melden bij de club. Wacht niet langer!</p>
+            </div>
+            <div class="col-sm-2 sidenav">
+                <div class="well">
+                    <p>Mooie knop hier ofzo</p>
+                </div>
+                <div class="well">
+                    <p>Nog zo'n mooie!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="container-fluid text-center">
+        <p onclick="contact()">Contact</p>
+    </footer>
+
 
     <br></br>
-
-    <img src='welcome.jpg' alt="welkom Picture">
-
-    <br></br>
-
-    <input type="button" class="contact" value="Klik hier om een contact formulier in te vullen"
-        onclick="contact()"></input>
 
 </body>
 
