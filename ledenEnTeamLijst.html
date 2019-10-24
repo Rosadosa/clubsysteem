@@ -96,10 +96,7 @@
                     var tabCell = tr.insertCell(-1);
                     tabCell.innerHTML = leden_array[i][col[j]];
                     tabCell.id = col[j];
-                    console.log(tabCell);
-                    //tabCell.onclick = function () { console.log(table.rows[this].cells[0].innerHTML) }
                 }
-                
             }
             var divContainer = document.getElementById(naam);
             divContainer.innerHTML = "";
@@ -108,9 +105,9 @@
 
         function lidNaarTeam() {
             lid = $('#lidId').val();
-            team = $('#teamId').val();
-            url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + team;
-
+            testding = $('#teamId').val();
+            url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + testding +"";
+            console.log(url);
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
