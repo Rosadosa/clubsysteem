@@ -41,21 +41,34 @@
             }
         }
 
+        function krijgTrainNiveau() {
+            var ele = document.getElementsByName('trainniveau')
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
         function krijgRollen(input) {
             if (document.getElementById(input).checked == true) {
                 return true;
             } else { return false; }
         }
 
-        function spelerCheck(){
+        function spelerCheck() {
             $('[id="speler"]').on('change', function () {
                 $('#select').toggle(this.checked);
-                }).change();
+            }).change();
+        }
 
+        function trainerCheck() {
+            $('[id="trainer"]').on('change', function () {
+                $('#trainselect').toggle(this.checked);
+            }).change();
         }
 
         function aanmelding() {
-            
+
             var rollen = [];
             if (document.getElementById("speler").checked == true)
                 rollen.push("speler");
@@ -75,6 +88,7 @@
             amdObject.wachtwoord = document.getElementById("wachtwoord").value;
             amdObject.positie = krijgPositie();
             amdObject.niveau = krijgNiveau();
+            amdObject.trainNiveau=krijgTrainNiveau();
             amdObject.coach = krijgRollen("coach");
             amdObject.trainer = krijgRollen("trainer");
             amdObject.speler = krijgRollen("speler");
@@ -91,24 +105,74 @@
             console.log(amdObject);
 
             console.log(aanmeldingJSON);
-            if (amdObject.voornaam != null &
-                amdObject.achternaam != null &
-                amdObject.geslacht != null &
-                amdObject.geboortedatum != null &
-                amdObject.telefoonnummer != null &
-                amdObject.email != null &
-                amdObject.wachtwoord != null &
-                amdObject.positie != "" &
-                amdObject.niveau != null &
-                (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-                aanmeldVersturen(aanmeldingJSON);
-                window.location.href = 'bedanktAanmelding.html';
+            if (document.getElementById("speler").checked == true){
+                if (amdObject.voornaam != null &
+                    amdObject.achternaam != null &
+                    amdObject.geslacht != null &
+                    amdObject.geboortedatum != null &
+                    amdObject.telefoonnummer != null &
+                    amdObject.email != null &
+                    amdObject.wachtwoord != null &
+                    amdObject.positie != "" &
+                    amdObject.niveau != null &
+                    // amdObject.trainNiveau != null &
+                    (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
+                    aanmeldVersturen(aanmeldingJSON);
+                    window.location.href = 'bedanktAanmelding.html';
+                } else {
+                    alert("Niet alle velden zijn ingevuld")
+                }
+            }else if ((document.getElementById("speler").checked == true) & (document.getElementById("trainer").checked == true)){
+                if (amdObject.voornaam != null &
+                    amdObject.achternaam != null &
+                    amdObject.geslacht != null &
+                    amdObject.geboortedatum != null &
+                    amdObject.telefoonnummer != null &
+                    amdObject.email != null &
+                    amdObject.wachtwoord != null &
+                    amdObject.positie != "" &
+                    amdObject.niveau != null &
+                    amdObject.trainNiveau != null &
+                    (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
+                    aanmeldVersturen(aanmeldingJSON);
+                    window.location.href = 'bedanktAanmelding.html';
+                } else {
+                    alert("Niet alle velden zijn ingevuld")
+                }
+            }else if(document.getElementById("trainer").checked == true) {
+                if (amdObject.voornaam != null &
+                    amdObject.achternaam != null &
+                    amdObject.geslacht != null &
+                    amdObject.geboortedatum != null &
+                    amdObject.telefoonnummer != null &
+                    amdObject.email != null &
+                    amdObject.wachtwoord != null &
+                    amdObject.trainNiveau != null &
+                    (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
+                    aanmeldVersturen(aanmeldingJSON);
+                    window.location.href = 'bedanktAanmelding.html';
+                } else {
+                    alert("Niet alle velden zijn ingevuld")
+                }
+            } else if (document.getElementById("coach").checked == true){
+                if (amdObject.voornaam != null &
+                    amdObject.achternaam != null &
+                    amdObject.geslacht != null &
+                    amdObject.geboortedatum != null &
+                    amdObject.telefoonnummer != null &
+                    amdObject.email != null &
+                    amdObject.wachtwoord != null &
+                    (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
+                    aanmeldVersturen(aanmeldingJSON);
+                    window.location.href = 'bedanktAanmelding.html';
+                } else {
+                    alert("Niet alle velden zijn ingevuld")
+                }
             } else {
                 alert("Niet alle velden zijn ingevuld")
             }
 
-           
-            
+
 
             function aanmeldVersturen(data) {
                 var xhr = new XMLHttpRequest();
@@ -124,7 +188,7 @@
             }
 
         }
-        
+
         function cancellen() {
             window.location.href = 'index.html';
         }
@@ -201,10 +265,11 @@
             <label class="control-label col-sm-2" for="rollen">Wat wil je doen binnen de club?:</label>
             <div class="col-sm-10">
                 <div class="checkbox">
-                    <label for="speler"><input type="checkbox" name="rollen" id="speler" onclick="spelerCheck()">Speler</label>
+                    <label for="speler"><input type="checkbox" name="rollen" id="speler"
+                            onclick="spelerCheck()">Speler</label>
                 </div>
                 <div class="checkbox">
-                    <label for="trainer"><input type="checkbox" name="rollen" id="trainer">Trainer</label>
+                    <label for="trainer"><input type="checkbox" name="rollen" id="trainer" onclick="trainerCheck()">Trainer</label>
                 </div>
                 <div class="checkbox">
                     <label for="coach"><input type="checkbox" name="rollen" id="coach">Coach</label>
@@ -213,37 +278,6 @@
         </div>
 
         <div id="select" style="display:none">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="niveau">Gewenste speelniveau:</label>
-            <div class="col-sm-10">
-                <div class="radio">
-                    <label for="hoofdklasse"><input type="radio" name="niveau" value="hoofd klasse"> Hoofdklasse</label>
-                </div>
-                <div class="radio">
-                    <label for="promotieklasse"><input type="radio" name="niveau" value="promotie klasse"> Promotie
-                        Klasse</label>
-                </div>
-                <div class="radio">
-                    <label for="eersteklasse"><input type="radio" name="niveau" value="1e klasse"> 1e
-                        Klasse</label>
-                </div>
-                <div class="radio">
-                    <label for="tweedeklasse"><input type="radio" name="niveau" value="2e klasse"> 2e
-                        Klasse</label>
-                </div>
-                <div class="radio">
-                    <label for="derdeklasse"><input type="radio" name="niveau" value="3e klasse"> 3e Klasse</label>
-                </div>
-                <div class="radio">
-                    <label for="nooit"><input type="radio" name="niveau" value="nooit"> Nog nooit eerder gevolleybald,
-                        dus ik weet het niet</label>
-                </div>
-                <div class="radio">
-                    <label for="jeugd"><input type="radio" name="niveau" value="jeugd"> Jeugd</label>
-                </div>
-            </div>
-        </div>
-
         <div class="form-group">
             <label class="control-label col-sm-2" for="positie">Voorkeurspositie:</label>
             <div class="col-sm-10">
@@ -271,7 +305,74 @@
                 </div>
             </div>
         </div>
-    </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="niveau">Gewenste speelniveau:</label>
+            <div class="col-sm-10">
+                <div class="radio">
+                    <label for="hoofdklasse"><input type="radio" name="niveau" value="hoofd klasse">
+                        Hoofdklasse</label>
+                </div>
+                <div class="radio">
+                    <label for="promotieklasse"><input type="radio" name="niveau" value="promotie klasse"> Promotie
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="eersteklasse"><input type="radio" name="niveau" value="1e klasse"> 1e
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="tweedeklasse"><input type="radio" name="niveau" value="2e klasse"> 2e
+                        Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="derdeklasse"><input type="radio" name="niveau" value="3e klasse"> 3e Klasse</label>
+                </div>
+                <div class="radio">
+                    <label for="nooit"><input type="radio" name="niveau" value="nooit"> Nog nooit eerder
+                        gevolleybald,
+                        dus ik weet het niet</label>
+                </div>
+                <div class="radio">
+                    <label for="jeugd"><input type="radio" name="niveau" value="jeugd"> Jeugd</label>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div id="trainselect" style="display:none">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="niveau">Gewenste trainniveau:</label>
+                <div class="col-sm-10">
+                    <div class="radio">
+                        <label for="hoofdklasse"><input type="radio" name="trainniveau" value="hoofd klasse">
+                            Hoofdklasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="promotieklasse"><input type="radio" name="trainniveau" value="promotie klasse">
+                            Promotie
+                            Klasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="eersteklasse"><input type="radio" name="trainniveau" value="1e klasse"> 1e
+                            Klasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="tweedeklasse"><input type="radio" name="trainniveau" value="2e klasse"> 2e
+                            Klasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="derdeklasse"><input type="radio" name="trainniveau" value="3e klasse"> 3e
+                            Klasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="jeugd"><input type="radio" name="trainniveau" value="jeugd"> Jeugd</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
