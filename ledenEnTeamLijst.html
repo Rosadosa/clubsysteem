@@ -40,6 +40,12 @@
         function contact() {
             window.location.href = 'contact.html';
         }
+
+        $(window).on('load', function(){
+            getLeden(ledenlijst);
+            getTeams(teamlijst);
+        })
+
         function getLeden(ledenlijst) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -160,18 +166,16 @@
     </nav>
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-6">
-                <button type="button" class="btn btn-primary" onclick=getLeden(ledenlijst)>Vraag de ledenlijst
-                    op</button>
-                <br></br>
-            </div>
-            <div class="col-sm-6">
-                <button type="button" class="btn btn-primary" onclick=getTeams(teamlijst)>Vraag de teamlijst op</button>
-                <br></br>
-            </div>
-        </div>
-
+            <div class="row">
+                    <div class="col-sm-6">
+                        <h2> Ledenoverzicht </h2>
+                        <br></br>
+                    </div>
+                    <div class="col-sm-6">
+                        <h2> Teamoverzicht </h2>
+                        <br></br>
+                    </div>
+                </div>
         <div class="row">
             <div class="col-sm-6 pre-scrollable" id="ledenlijst">
                 <br></br>
