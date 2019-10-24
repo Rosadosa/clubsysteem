@@ -6,13 +6,18 @@
 
 <head>
     <style>
+    .btn-primary{
+        background-color: darkcyan;
+    }
+
     </style>
     <script>
 
-        function krijgCompetitie() {
+        function krijgCompetitie() {        
+            
             if (document.getElementById("ja").checked == true) {
-                return true;
-            } else { return false; }
+                 return true;
+             } else { return false; }
         }
 
         function krijgTeamtype() {
@@ -32,11 +37,20 @@
             }
         }
 
-        function competitieCheck(){
-        $('[name="ja"]').on('change', function () {
+        function competitieCheck() {
+
+            $('[id="ja"]').on('change', function () {
                 $('#select').toggle(this.checked);
-            }).change();
+                }).change();
+            $('[id="nee"]').click(function () {
+                $('#select').slideUp();
+            })
+
+
         }
+
+
+
 
         function aanmaakTeam() {
             var teamObject = {};
@@ -114,22 +128,21 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="competitie">Competitie:</label>
             <div class="col-sm-10">
-                <div class="radio" onclick="competitieCheck()">
-                    <label for="ja"><input type="radio" class="button" name="ja" id="ja" value="ja" required> Ja
-                    </label>
+                <div class="radio">
+                    <label for="ja"><input type="radio" name="competitie" id="ja" value="ja" onclick="competitieCheck()"> Ja </label>
                 </div>
-                <div class="radio" onclick = "competitieCheck()">
-                    <label for="nee"><input type="radio" name="nee" id="nee" value="nee" required> Nee </label>
+                <div class="radio">
+                    <label for="nee"><input type="radio" name="competitie" id="nee" value="nee" onclick="competitieCheck()"> Nee </label>
                 </div>
             </div>
         </div>
         <div id="select" style="display: none">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="coach">Coach:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="coach" placeholder="Vul naam coach in" required>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="coach">Coach:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="coach" placeholder="Vul naam coach in" required>
+                </div>
             </div>
-        </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="teamtype">Teamtype:</label>
                 <div class="col-sm-10">
