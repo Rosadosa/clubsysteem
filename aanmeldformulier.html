@@ -47,7 +47,15 @@
             } else { return false; }
         }
 
+        function spelerCheck(){
+            $('[id="speler"]').on('change', function () {
+                $('#select').toggle(this.checked);
+                }).change();
+
+        }
+
         function aanmelding() {
+            
             var rollen = [];
             if (document.getElementById("speler").checked == true)
                 rollen.push("speler");
@@ -94,10 +102,13 @@
                 amdObject.niveau != null &
                 (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                 aanmeldVersturen(aanmeldingJSON);
+                window.location.href = 'bedanktAanmelding.html';
             } else {
                 alert("Niet alle velden zijn ingevuld")
             }
 
+           
+            
 
             function aanmeldVersturen(data) {
                 var xhr = new XMLHttpRequest();
@@ -109,9 +120,11 @@
                 xhr.open("POST", "http://localhost:8082/aanmelding", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(data);
+
             }
 
         }
+        
         function cancellen() {
             window.location.href = 'index.html';
         }
@@ -167,11 +180,28 @@
             </div>
         </div>
 
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="wachtwoord">Wachtwoord:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="wachtwoord" placeholder="Voer een wachtwoord in"
+                    required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="bevestigwachtwoord">Bevestig wachtwoord:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="bevestigwachtwoord" placeholder="Bevestig wachtwoord"
+                    required>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="control-label col-sm-2" for="rollen">Wat wil je doen binnen de club?:</label>
             <div class="col-sm-10">
                 <div class="checkbox">
-                    <label for="speler"><input type="checkbox" name="rollen" id="speler">Speler</label>
+                    <label for="speler"><input type="checkbox" name="rollen" id="speler" onclick="spelerCheck()">Speler</label>
                 </div>
                 <div class="checkbox">
                     <label for="trainer"><input type="checkbox" name="rollen" id="trainer">Trainer</label>
@@ -182,6 +212,7 @@
             </div>
         </div>
 
+        <div id="select" style="display:none">
         <div class="form-group">
             <label class="control-label col-sm-2" for="niveau">Gewenste speelniveau:</label>
             <div class="col-sm-10">
@@ -240,22 +271,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="wachtwoord">Wachtwoord:</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="wachtwoord" placeholder="Voer een wachtwoord in"
-                    required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="bevestigwachtwoord">Bevestig wachtwoord:</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="bevestigwachtwoord" placeholder="Bevestig wachtwoord"
-                    required>
-            </div>
-        </div>
+    </div>
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

@@ -50,8 +50,6 @@
         }
 
 
-
-
         function aanmaakTeam() {
             var teamObject = {};
 
@@ -59,12 +57,13 @@
             teamObject.trainer = document.getElementById("trainer").value;
             teamObject.competitie = krijgCompetitie();
             teamObject.coach = document.getElementById("coach").value;
-            teamObject.teamtype = krijgTeamtype();
+            teamObject.teamType = krijgTeamtype();
             teamObject.niveau = krijgNiveau();
 
             var teamJSON = JSON.stringify(teamObject);
 
             console.log(teamObject);
+            console.log(teamJSON);
 
 
             if (teamObject.competitie == true) {
@@ -72,9 +71,10 @@
                 if (teamObject.teamnaam != "" &
                     teamObject.trainer != "" &
                     teamObject.coach != "" &
-                    teamObject.teamtype != null &
+                    teamObject.teamType != null &
                     teamObject.niveau != null) {
                     teamVersturen(teamJSON);
+                    window.location.href = 'bevestigingTeamaanmaak.html';
                 } else {
                     alert("niet alle velden zijn ingevuld")
                 }
@@ -83,6 +83,7 @@
                 if (teamObject.teamnaam != "" &
                     teamObject.trainer != "") {
                     teamVersturen(teamJSON);
+                    window.location.href = 'bevestigingTeamaanmaak.html';
                 } else {
                     alert("trainer of teamnaam is niet ingevuld")
                 }
