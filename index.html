@@ -4,12 +4,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 <head>
-
     <style>
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
-
             color: white;
         }
 
@@ -26,33 +24,36 @@
     </style>
 
     <script>
+        function home(){
+            window.location.href = 'index.html'
+        }
         function aanmelden() {
             window.location.href = 'aanmeldformulier.html';
-            console.log("aanmelden")
         }
-
         function inloggen() {
             window.location.href = 'inloggen.html';
-            console.log("inloggen")
         }
-
-        function team() {
-            window.location.href = 'teampagina.html';
-            console.log("team pagina")
+        function teamOverzicht() {
+            window.location.href = 'teamlijst.html';
         }
-
+        function maakTeam(){
+            window.location.href = 'teamformulier.html'; 
+        }
+        function teamLedenLijst(){
+            window.location.href = 'ledenEnTeamLijst.html';
+        }
         function wedstrijd() {
             window.location.href = 'wedstrijd.html';
-            console.log("wedstrijd")
         }
 
         function training() {
             window.location.href = 'training.html';
-            console.log("training")
         }
         function contact() {
             window.location.href = 'contact.html';
-            console.log("contact")
+        }
+        function ledenLijst(){
+            window.location.href = 'ledenlijst.html';
         }
 
 
@@ -75,9 +76,16 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
+                    <li class="active"><a href="#" onclick="home()">Home</a></li>
                     <li><a href="#" onclick="aanmelden()">Aanmelden bij de club</a></li>
-                    <li><a href="#" onclick="team()">Teaminformatie</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaminformatie<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="maakTeam()">Maak een team</a></li>
+                            <li><a href="#" onclick="teamOverzicht()">Team overzicht</a></li>
+                            <li><a href="#" onclick="teamLedenLijst()">Voeg mensen toe aan teams</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#" onclick="wedstrijd()">Wedstrijdinformatie</a></li>
                     <li><a href="#" onclick="training()">Trainingsinformatie</a></li>
                 </ul>
@@ -92,7 +100,7 @@
     <div class="container-fluid text-center">
         <div class="row content">
             <div class="col-sm-2 sidenav">
-                <p><a href="#">Mogelijk dingen hier</a></p>
+                <p><a href="#" onclick="ledenLijst()">Zie de huidige ledenlijst</a></p>
             </div>
             <div class="col-sm-8 text-left">
                 <h1>Welkom bij de club!</h1>
