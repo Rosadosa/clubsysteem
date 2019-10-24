@@ -11,6 +11,34 @@
     </style>
 
     <script>
+        function home() {
+            window.location.href = 'index.html'
+        }
+        function aanmelden() {
+            window.location.href = 'aanmeldformulier.html';
+        }
+        function inloggen() {
+            window.location.href = 'inloggen.html';
+        }
+        function teamOverzicht() {
+            window.location.href = 'teamlijst.html';
+        }
+        function maakTeam() {
+            window.location.href = 'teamformulier.html';
+        }
+        function teamLedenLijst() {
+            window.location.href = 'ledenEnTeamLijst.html';
+        }
+        function wedstrijd() {
+            window.location.href = 'wedstrijd.html';
+        }
+
+        function training() {
+            window.location.href = 'training.html';
+        }
+        function contact() {
+            window.location.href = 'contact.html';
+        }
         function getLeden(ledenlijst) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
@@ -53,6 +81,7 @@
 
             for (var i = 0; i < col.length; i++) {
                 var th = document.createElement("th");
+                th.style = "background-color: darkcyan";
                 th.innerHTML = col[i];
                 tr.appendChild(th);
             }
@@ -76,6 +105,41 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#" onclick="home()">Home</a></li>
+                    <li><a href="#" onclick="aanmelden()">Aanmelden bij de club</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Teaminformatie<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="maakTeam()">Maak een team</a></li>
+                            <li><a href="#" onclick="teamOverzicht()">Team overzicht</a></li>
+                            <li><a href="#" onclick="teamLedenLijst()">Voeg mensen toe aan teams</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" onclick="wedstrijd()">Wedstrijdinformatie</a></li>
+                    <li><a href="#" onclick="training()">Trainingsinformatie</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" onclick="inloggen()"><span class="glyphicon glyphicon-log-in"></span> Inloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
@@ -96,7 +160,11 @@
             <div class="col-sm-6 pre-scrollable" type=divContainer id="teamlijst">
             </div>
         </div>
+        <br></br>
+        <button type="button" class="btn btn-primary" >Voeg geselecteerde persoon toe aan geselecteerde team </button>    
     </div>
+
+    
 
 
 </body>
