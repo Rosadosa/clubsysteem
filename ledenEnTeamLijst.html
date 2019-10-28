@@ -94,8 +94,6 @@
                 tr.appendChild(th);
             }
 
-            console.log(tr);
-
             for (var i = 0; i < leden_array.length; i++) {
                 tr = table.insertRow(-1);
                 for (var j = 0; j < col.length; j++) {
@@ -103,15 +101,26 @@
                     tabCell.innerHTML = leden_array[i][col[j]];
                     tabCell.id = col[j];
                 }
+                console.log(tr);
+                tr.onclick = function(){console.log(td.id);}
+                tr.onclick = function(){console.log($('#id'))}
+                
             }
+
+            
             var divContainer = document.getElementById(naam);
             divContainer.innerHTML = "";
             divContainer.appendChild(table);
-        };
+        
+
+           
+        }
 
         function lidNaarTeam() {
             lid = $('#lidId').val();
-            testding = $('#teamId').val();
+            testding = $('#teamKeuze').val();
+            console.log(lid);
+            console.log(testding);
             url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + testding +"";
             console.log(url);
             var xhr = new XMLHttpRequest();
@@ -120,7 +129,6 @@
                     console.log("persoon toegevoegd!");
                 }
             }
-
             xhr.open("GET", url, true)
             xhr.send();
 
@@ -185,7 +193,7 @@
         </div>
         <br></br>
         <input type="text" id="lidId">
-        <input type="text" id="teamId">
+        <input type="text" id="teamKeuze">
         <button type="button" class="btn btn-primary" onclick="lidNaarTeam()">Voeg geselecteerde persoon toe aan
             geselecteerde team </button>
     </div>
