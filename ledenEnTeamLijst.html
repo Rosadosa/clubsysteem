@@ -78,14 +78,14 @@
                 if (this.readyState == 4) {
                     console.log(this.responseText);
                     var teams = JSON.parse(this.responseText);
-                    createTable(teams, teamlijst.id)
+                    createTable(teams, teamlijst.id);
                 }
             }
             xhr.open("GET", "http://localhost:8082/teamlijst", true)
             xhr.send();
         }
 
-        function geefSelectie(ledenlijst) {
+        function geefSelectie(selectie) {
             $('#ledenlijst').remove();
             var api = "/?niveau=" + document.getElementById("niveau").textContent + "&geslacht=" + document.getElementById("geslacht").textContent;
             console.log(api);
@@ -94,11 +94,13 @@
                 if (this.readyState == 4) {
                     var selectieLeden = JSON.parse(this.responseText);
                     console.log(selectieLeden);
-                    createTable(selectieLeden, ledenlijst.id);
+                    createTable(selectieLeden, selectie.id);
+                    console.log(selectie.id);
                 }
             }
             xhr.open("GET", "http://localhost:8082/ledenlijst/niveaugeslacht" + api, true)
             xhr.send();
+            getLeden(ledenlijst);
         }
 
         var lid;
@@ -139,7 +141,7 @@
                 console.log(table);
                 console.log(tr);
 
-                if (naam == ledenlijst.id) {
+                if (naam == selectie.id) {
                     tr.onclick = function () {
                         //console.log(typeof index)
                         if (typeof index !== "undefined"){
@@ -152,7 +154,7 @@
                         lid = this.cells[0].innerHTML
                     }
                 }
-                else {
+                else if (naam==teamlijst.id) {
                     tr.onclick = function () {
                         //console.log(typeof index)
                         if (typeof index !== "undefined"){
@@ -164,6 +166,19 @@
                         //document.getElementById("teamKeuze").value = this.cells[0].innerHTML;
                         testding = this.cells[0].innerHTML
                     }
+                } else {
+                    tr.onclick = function () {
+                        //console.log(typeof index)
+                        if (typeof index !== "undefined"){
+                            table.rows[index].classList.toggle("selected");
+                        }
+                        index = this.rowIndex
+                        this.classList.toggle("selected");
+                        // console.log(typeof index);                       
+                        //document.getElementById("lidId").value = this.cells[0].innerHTML;
+                        lid = this.cells[0].innerHTML
+                    }
+
                 }
             }
 
@@ -234,14 +249,12 @@
         <div class="row">
             <div class="col-sm-6">
                 <h2> Ledenoverzicht </h2>
-                <br></br>
             </div>
             <div class="col-sm-6">
                 <h2> Teamoverzicht </h2>
-                <br></br>
             </div>
         </div>
-        <h3>Kies hier onder waar je naar wilt zoeken:</h3>
+        <h3>Kies hieronder waar je naar wilt zoeken:</h3>
     <div class="btn-group dropdown">
         <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="niveau">Klasse
             <span class="caret"></span></button>
@@ -262,12 +275,25 @@
             <li><a href="#">Vrouw</a></li>
         </ul>
     </div>
-    <button class="btn btn-primary" onclick=geefSelectie()>Zoeken</button>
+    <!-- <div class="btn-group dropdown">
+        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="niveau">Positie
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="#">Spelverdeler</a></li>
+            <li><a href="#">Midden</a></li>
+            <li><a href="#">Passer loper</a></li>
+            <li><a href="#">Diagonaal</a></li>
+            <li><a href="#">Libero</a></li>
+        </ul>
+    </div> -->
+    <button class="btn btn-primary" onclick=geefSelectie(selectie)>Zoeken</button>
     </div>
         <div class="row">
             <div class="col-sm-6 pre-scrollable" id="ledenlijst">
                 <br></br>
             </div>
+            <div class="col-sm-6 pre-scrollable" id="selectie">
+                </div>
             <div class="col-sm-6 pre-scrollable" type=divContainer id="teamlijst">
             </div>
         </div>
