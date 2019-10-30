@@ -40,6 +40,10 @@
             window.location.href = 'contact.html';
         }
 
+        function verwijsPagina(url){
+            window.location.href = url;
+        }
+
         $(window).on('load', function(){
             getTeams();
         })
@@ -116,7 +120,9 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" onclick="maakTeam()">Maak een team</a></li>
                             <li><a href="#" onclick="teamOverzicht()">Team overzicht</a></li>
-                            <li><a href="#" onclick="teamLedenLijst()">Voeg mensen toe aan teams</a></li>
+                            <li><a href="#" onclick="teamLedenLijst()">Voeg speler toe aan teams</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamTrainerLijst.html')">Voeg trainer toe aan teams</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamCoachLijst.html')">Voeg coach toe aan teams</a></li>
                         </ul>
                     </li>
                     <li><a href="#" onclick="wedstrijd()">Wedstrijdinformatie</a></li>
