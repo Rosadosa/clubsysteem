@@ -10,7 +10,7 @@
             background-color: darkcyan;
         }
 
-        .selected{
+        .selected {
             background-color: yellow;
         }
     </style>
@@ -37,12 +37,14 @@
         function wedstrijd() {
             window.location.href = 'wedstrijd.html';
         }
-
         function training() {
             window.location.href = 'training.html';
         }
         function contact() {
             window.location.href = 'contact.html';
+        }
+        function verwijsPagina(url){
+            window.location.href = url;
         }
 
         $(window).on('load', function () {
@@ -59,8 +61,9 @@
             });
         });
 
-        
+
         function getLeden(ledenlijst) {
+            var speler = 1
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
@@ -68,7 +71,7 @@
                     createTable(leden, ledenlijst.id)
                 }
             }
-            xhr.open("GET", "http://localhost:8082/ledenlijst", true)
+            xhr.open("GET", "http://localhost:8082/spelerslijst/" + speler + "", true)
             xhr.send();
         }
 
@@ -84,35 +87,184 @@
             xhr.send();
         }
 
-        function geefSelectie(selectie) {
-            $('#ledenlijst').remove();
-            var api = "/?niveau=" + document.getElementById("niveau").textContent + "&geslacht=" + document.getElementById("geslacht").textContent;
-            console.log(api);
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    var selectieLeden = JSON.parse(this.responseText);
-                    console.log(selectieLeden);
-                    createTable(selectieLeden, selectie.id);
-                    console.log(selectie.id);
+
+        function geefSelectie() {
+            if (document.getElementById("niveau").textContent != "Alle niveaus" &
+                document.getElementById("geslacht").textContent != "Man en Vrouw" & document.getElementById("positie").textContent == "Alle posities") {
+                var api = "/?niveau=" + document.getElementById("niveau").textContent + "&geslacht=" + document.getElementById("geslacht").textContent;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var selectieNiveauGeslacht = JSON.parse(this.responseText);
+                        createTableSelectie(selectieNiveauGeslacht);
+                    }
                 }
+                xhr.open("GET", "http://localhost:8082/spelerslijst/niveaugeslacht" + api, true)
+                xhr.send();
+            } else if (document.getElementById("niveau").textContent != "Alle niveaus" & document.getElementById("geslacht").textContent == "Man en Vrouw" & document.getElementById("positie").textContent == "Alle posities") {
+                var keuzeniveau = document.getElementById("niveau").textContent;
+                console.log(keuzeniveau);
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var selectieNiveau = JSON.parse(this.responseText);
+                        createTableSelectie(selectieNiveau);
+                    }
+                }
+                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekniveau/" + keuzeniveau + "", true)
+                xhr.send();
+            } else if (document.getElementById("geslacht").textContent != "Man en Vrouw" & document.getElementById("niveau").textContent == "Alle niveaus" & document.getElementById("positie").textContent == "Alle posities") {
+                var keuzegeslacht = document.getElementById("geslacht").textContent;
+                console.log(keuzegeslacht);
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var selectieGeslacht = JSON.parse(this.responseText);
+                        createTableSelectie(selectieGeslacht);
+                    }
+                }
+                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekgeslacht/" + keuzegeslacht + "", true)
+                xhr.send();
+            } else if (document.getElementById("positie").textContent != "Alle posities" & document.getElementById("geslacht").textContent == "Man en Vrouw" & document.getElementById("niveau").textContent == "Alle niveaus") {
+                var keuzePositie = document.getElementById("positie").textContent.substring(0, 1);
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var selectiePositie = JSON.parse(this.responseText);
+                        createTableSelectie(selectiePositie);
+
+                    }
+                }
+                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekpositie/" + keuzePositie + "", true)
+                xhr.send();
+
+                // } else if (document.getElementById("geslacht").textContent != "Man en Vrouw" & document.getElementById("positie").textContent != "Alle posities" & document.getElementById("niveau").textContent == "Alle niveaus") {
+                //     alert("geslacht + posities")
+                //     var keuzegeslacht = document.getElementById("geslacht").textContent;
+                //     console.log(keuzegeslacht);
+                //     var xhr = new XMLHttpRequest();
+                //     xhr.onreadystatechange = function () {
+                //         if (this.readyState == 4) {
+                //             var selectieGeslacht = JSON.parse(this.responseText);
+                //             console.log(selectieGeslacht);
+
+                //             createTableSelectie(selectieGeslacht);
+                //             console.log(selectie.id);
+                //         }
+                //     }
+                //     xhr.open("GET", "http://localhost:8082/spelerslijst/zoekgeslacht/" + keuzegeslacht + "", true)
+                //     xhr.send();
+                // } else if (document.getElementById("niveau").textContent != "Alle niveaus" & document.getElementById("positie").textContent != "Alle posities" & document.getElementById("geslacht").textContent == "Man en Vrouw") {
+                //     alert("niveau + posities")
+                //     var keuzegeslacht = document.getElementById("geslacht").textContent;
+                //     console.log(keuzegeslacht);
+                //     var xhr = new XMLHttpRequest();
+                //     xhr.onreadystatechange = function () {
+                //         if (this.readyState == 4) {
+                //             var selectieGeslacht = JSON.parse(this.responseText);
+                //             console.log(selectieGeslacht);
+
+                //             createTable(selectieGeslacht, selectie.id);
+                //             console.log(selectie.id);
+                //         }
+                //     }
+                //     xhr.open("GET", "http://localhost:8082/ledenlijst/zoekgeslacht/" + keuzegeslacht + "", true)
+                //     xhr.send();
+            } else if (document.getElementById("niveau").textContent == "Alle niveaus" & document.getElementById("positie").textContent == "Alle posities" & document.getElementById("geslacht").textContent == "Man en Vrouw") {
+                alert("alles")
+                //getLeden(ledenlijst);
+            } else if (document.getElementById("niveauHoofd").innerHTML == "Klasse" & document.getElementById("geslachtHoofd").innerHTML == "Geslacht" & document.getElementById("positieHoofd").innerHTML == "Positie") {
+                 alert("Geef voor elke optie een selectie op");
+            } else if (document.getElementById("niveau").textContent != "Alle niveaus" & document.getElementById("positie").textContent != "Alle posities" & document.getElementById("geslacht").textContent != "Man en Vrouw") {
+                alert("niveau + geslacht + positie")
+                geslacht = document.getElementById("geslacht").textContent;
+                niveau = document.getElementById("niveau").textContent;
+                positie = document.getElementById("positie").textContent.substring(0, 1);
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var selectieGeslacht = JSON.parse(this.responseText);
+                        createTableSelectie(selectieGeslacht);
+                    }
+                }
+                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekcombo/" + geslacht + "/" + niveau + "/" + positie + "", true)
+                xhr.send();
+
+            
+            } else {
+                alert("Geef voor elke optie een selectie op");
             }
-            xhr.open("GET", "http://localhost:8082/ledenlijst/niveaugeslacht" + api, true)
-            xhr.send();
-            getLeden(ledenlijst);
         }
 
         var lid;
         var testding;
+        var divContainer;
+
+        function createTableSelectie(leden_array) {
+            var col = [];
+            var table = document.createElement("table");
+            table.className = "table table-bordered table-sm table-hover ";
+            var tr = table.insertRow(-1);
+
+            for (var i = 0; i < leden_array.length; i++) {
+                for (var key in leden_array[i]) {
+                    if (col.indexOf(key) === -1) {
+                        col.push(key);
+                    }
+                }
+            }
+
+            for (var i = 0; i < col.length; i++) {
+                var th = document.createElement("th");
+                th.style = "background-color: darkcyan";
+                th.innerHTML = col[i];
+                tr.appendChild(th);
+            }
+
+            for (var i = 0; i < leden_array.length; i++) {
+                tr = table.insertRow(-1);
+                for (var j = 0; j < col.length; j++) {
+                    var tabCell = tr.insertCell(-1);
+                    tabCell.innerHTML = leden_array[i][col[j]];
+                    tabCell.id = col[j];
+                }
+
+                if (table.id == "ledenlijst") {
+                    tr.onclick = function () {
+                        if (typeof index !== "undefined") {
+                            table.rows[index].classList.toggle("selected");
+                        }
+                        index = this.rowIndex
+                        this.classList.toggle("selected");
+                        testding = this.cells[0].innerHTML
+                    }
+                } else {
+
+                    tr.onclick = function () {
+                        if (typeof index !== "undefined") {
+                            table.rows[index].classList.toggle("selected");
+                        }
+                        index = this.rowIndex
+                        this.classList.toggle("selected");
+                        lid = this.cells[0].innerHTML
+                    }
+
+                }
+            }
+
+            var divContainer = document.getElementById("ledenlijst");
+            divContainer.innerHTML = "";
+            divContainer.appendChild(table);
+        }
 
         function createTable(leden_array, naam) {
             var col = [];
             var table = document.createElement("table");
             table.className = "table table-bordered table-sm table-hover ";
             table.id = naam;
+            console.log(">>>" + naam);
             var tr = table.insertRow(-1);
             var index;
-
             for (var i = 0; i < leden_array.length; i++) {
                 for (var key in leden_array[i]) {
                     if (col.indexOf(key) === -1) {
@@ -137,63 +289,35 @@
                     tabCell.id = col[j];
                 }
 
-                console.log(table);
-                console.log(tr);
-
-                if (naam == selectie.id) {
+                if (table.id == "teamlijst") {
                     tr.onclick = function () {
-                        //console.log(typeof index)
-                        if (typeof index !== "undefined"){
+                        if (typeof index !== "undefined") {
                             table.rows[index].classList.toggle("selected");
                         }
                         index = this.rowIndex
                         this.classList.toggle("selected");
-                        // console.log(typeof index);                       
-                        //document.getElementById("lidId").value = this.cells[0].innerHTML;
-                        lid = this.cells[0].innerHTML
-                    }
-                }
-                else if (naam==teamlijst.id) {
-                    tr.onclick = function () {
-                        //console.log(typeof index)
-                        if (typeof index !== "undefined"){
-                            table.rows[index].classList.toggle("selected");
-                        }
-                        index = this.rowIndex
-                        this.classList.toggle("selected");
-                        // console.log(typeof index);                       
-                        //document.getElementById("teamKeuze").value = this.cells[0].innerHTML;
                         testding = this.cells[0].innerHTML
                     }
                 } else {
                     tr.onclick = function () {
-                        //console.log(typeof index)
-                        if (typeof index !== "undefined"){
+                        if (typeof index !== "undefined") {
                             table.rows[index].classList.toggle("selected");
                         }
                         index = this.rowIndex
                         this.classList.toggle("selected");
-                        // console.log(typeof index);                       
-                        //document.getElementById("lidId").value = this.cells[0].innerHTML;
                         lid = this.cells[0].innerHTML
                     }
 
                 }
             }
 
-            var divContainer = document.getElementById(naam);
+            var divContainer = document.getElementById(table.id);
             divContainer.innerHTML = "";
             divContainer.appendChild(table);
-
         }
 
         function lidNaarTeam() {
-            //lid = $('#lidId').val();
-            //testding = $('#teamKeuze').val();
-            console.log(lid);
-            console.log(testding);
             url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + testding + "";
-            console.log(url);
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
@@ -202,9 +326,10 @@
             }
             xhr.open("GET", url, true)
             xhr.send();
-
+            window.location.reload();
 
         }
+
     </script>
 </head>
 
@@ -230,7 +355,9 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" onclick="maakTeam()">Maak een team</a></li>
                             <li><a href="#" onclick="teamOverzicht()">Team overzicht</a></li>
-                            <li><a href="#" onclick="teamLedenLijst()">Voeg mensen toe aan teams</a></li>
+                            <li><a href="#" onclick="teamLedenLijst()">Voeg speler toe aan teams</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamTrainerLijst.html')">Voeg trainer toe aan teams</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamCoachLijst.html')">Voeg coach toe aan teams</a></li>
                         </ul>
                     </li>
                     <li><a href="#" onclick="wedstrijd()">Wedstrijdinformatie</a></li>
@@ -247,58 +374,66 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h2> Ledenoverzicht </h2>
+                <h2> Speleroverzicht </h2>
             </div>
             <div class="col-sm-6">
                 <h2> Teamoverzicht </h2>
             </div>
         </div>
         <h3>Kies hieronder waar je naar wilt zoeken:</h3>
-    <div class="btn-group dropdown">
-        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="niveau">Klasse
-            <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li><a href="#">Hoofd klasse</a></li>
-            <li><a href="#">Promotie klasse</a></li>
-            <li><a href="#">1e klasse</a></li>
-            <li><a href="#">2e klasse</a></li>
-            <li><a href="#">3e klasse</a></li>
-            <li><a href="#">Jeugd</a></li>
-        </ul>
+        <div class="btn-group dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="niveau">
+                    <span id="niveauHoofd">Klasse</span>
+                <span class="caret"></span> </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Alle niveaus</a></li>
+                <li><a href="#">Hoofd Klasse</a></li>
+                <li><a href="#">Promotie Klasse</a></li>
+                <li><a href="#">1e Klasse</a></li>
+                <li><a href="#">2e Klasse</a></li>
+                <li><a href="#">3e Klasse</a></li>
+                <li><a href="#">Jeugd</a></li>
+            </ul>
+        </div>
+        <div class="btn-group dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="geslacht">
+                    <span id="geslachtHoofd">Geslacht</span>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Man en Vrouw</a></li>
+                <li><a href="#">Man</a></li>
+                <li><a href="#">Vrouw</a></li>
+            </ul>
+        </div>
+        <div class="btn-group dropdown" >
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="positie"> 
+                <span id="positieHoofd">Positie</span>
+                <span class="caret"></span></button></button>
+            <ul class="dropdown-menu" >
+                <li><a href="#">Alle posities</a></li>
+                <li><a href="#">Spelverdeler</a></li>
+                <li><a href="#">Midden</a></li>
+                <li><a href="#">Passer loper</a></li>
+                <li><a href="#">Diagonaal</a></li>
+                <li><a href="#">Libero</a></li>
+            </ul>
+        </div>
+        <button class="btn btn-primary" onclick=geefSelectie()>Zoeken</button>
+        <br></br>
     </div>
-    <div class="btn-group dropdown">
-        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="geslacht">Geslacht
-            <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li><a href="#">Man</a></li>
-            <li><a href="#">Vrouw</a></li>
-        </ul>
-    </div>
-    <!-- <div class="btn-group dropdown">
-        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="niveau">Positie
-            <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li><a href="#">Spelverdeler</a></li>
-            <li><a href="#">Midden</a></li>
-            <li><a href="#">Passer loper</a></li>
-            <li><a href="#">Diagonaal</a></li>
-            <li><a href="#">Libero</a></li>
-        </ul>
-    </div> -->
-    <button class="btn btn-primary" onclick=geefSelectie(selectie)>Zoeken</button>
-    </div>
-        <div class="row">
-            <div class="col-sm-6 pre-scrollable" id="ledenlijst">
-                <br></br>
+    <div class="row">
+        <div class="ledenlijst">
+            <div class="col-sm-6 pre-scrollable" type=divContainer id="ledenlijst">
             </div>
-            <div class="col-sm-6 pre-scrollable" id="selectie">
-                </div>
+        </div>
+        <div class="teamlijst">
             <div class="col-sm-6 pre-scrollable" type=divContainer id="teamlijst">
             </div>
         </div>
-        <br></br>
-        <button type="button" class="btn btn-primary" onclick="lidNaarTeam()">Voeg geselecteerde persoon toe aan
-            geselecteerde team </button>
+    </div>
+    <br></br>
+    <button type="button" class="btn btn-primary" onclick="lidNaarTeam()">Voeg geselecteerde speler toe aan
+        geselecteerde team </button>
     </div>
 
 
