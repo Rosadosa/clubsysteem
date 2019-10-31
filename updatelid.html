@@ -13,194 +13,42 @@
             box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
         }
     </style>
+        
+        
+
     <script>
-        function krijgGeslacht() {
-            var ele = document.getElementsByName('geslacht');
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked)
-                    return ele[i].value;
-            }
-        }
-
-        function krijgPositie() {
-            var ele = document.getElementsByName('positie');
-            var positie_string = "";
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked) {
-                    positie_string = positie_string.concat(ele[i].value);
-                }
-            }
-            return positie_string;
-        }
-
-        function krijgNiveau() {
-            var ele = document.getElementsByName('niveau')
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked)
-                    return ele[i].value;
-            }
-        }
-
-        function krijgTrainNiveau() {
-            var ele = document.getElementsByName('trainniveau')
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked)
-                    return ele[i].value;
-            }
-        }
-
-        function krijgRollen(input) {
-            if (document.getElementById(input).checked == true) {
-                return true;
-            } else { return false; }
-        }
-
-        function spelerCheck() {
-            $('[id="speler"]').on('change', function () {
-                $('#select').toggle(this.checked);
-            }).change();
-        }
-
-        function trainerCheck() {
-            $('[id="trainer"]').on('change', function () {
-                $('#trainselect').toggle(this.checked);
-            }).change();
-        }
-
-        function aanmelding() {
-
-            var rollen = [];
-            if (document.getElementById("speler").checked == true)
-                rollen.push("speler");
-            if (document.getElementById("coach").checked == true)
-                rollen.push("coach");
-            if (document.getElementById("trainer").checked == true)
-                rollen.push("trainer");
-
-            var amdObject = {};
-
-            amdObject.voornaam = document.getElementById("voornaam").value;
-            amdObject.achternaam = document.getElementById("achternaam").value;
-            amdObject.geslacht = krijgGeslacht();
-            amdObject.geboortedatum = document.getElementById("geboortedatum").value;
-            amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
-            amdObject.email = document.getElementById("email").value;
-            amdObject.wachtwoord = document.getElementById("wachtwoord").value;
-            amdObject.posities = krijgPositie();
-            amdObject.niveau = krijgNiveau();
-            amdObject.trainNiveau=krijgTrainNiveau();
-            amdObject.coach = krijgRollen("coach");
-            amdObject.trainer = krijgRollen("trainer");
-            amdObject.speler = krijgRollen("speler");
-
-
-            if (wachtwoord.value != bevestigwachtwoord.value) {
-                alert("Bevestig wachtwoord en wachtwoord zijn verschillend");
-                wachtwoord.value = "";
-                bevestigwachtwoord.value = "";
-            } else {
-                amdObject.wachtwoord = document.getElementById("wachtwoord").value;
-                var aanmeldingJSON = JSON.stringify(amdObject);
-            }
-    
-
+        $(window).on('load', function () {
+            informatieLid = {};
+            localStorage.getItem("informatielid", this.responseText)
+            console.log(localStorage.getItem("informatielid", this.responseText));
+            console.log(informatieLid.voornaam);
             
-            if (document.getElementById("speler").checked == true){
-                if (amdObject.voornaam != null &
-                    amdObject.achternaam != null &
-                    amdObject.geslacht != null &
-                    amdObject.geboortedatum != null &
-                    amdObject.telefoonnummer != null &
-                    amdObject.email != null &
-                    amdObject.wachtwoord != null &
-                    amdObject.posities != "" &
-                    amdObject.niveau != null &
-                    (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-                    aanmeldVersturen(aanmeldingJSON);
-                    console.log(aanmeldingJSON);
-                    setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
-                } else {
-                    alert("Niet alle velden zijn ingevuld")
-                }
-            }else if ((document.getElementById("speler").checked == true) & (document.getElementById("trainer").checked == true)){
-                if (amdObject.voornaam != null &
-                    amdObject.achternaam != null &
-                    amdObject.geslacht != null &
-                    amdObject.geboortedatum != null &
-                    amdObject.telefoonnummer != null &
-                    amdObject.email != null &
-                    amdObject.wachtwoord != null &
-                    amdObject.posities != "" &
-                    amdObject.niveau != null &
-                    amdObject.trainNiveau != null &
-                    (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-                    aanmeldVersturen(aanmeldingJSON);
-                    console.log(aanmeldingJSON);
-                    setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
-                } else {
-                    alert("Niet alle velden zijn ingevuld")
-                }
-            }else if(document.getElementById("trainer").checked == true) {
-                if (amdObject.voornaam != null &
-                    amdObject.achternaam != null &
-                    amdObject.geslacht != null &
-                    amdObject.geboortedatum != null &
-                    amdObject.telefoonnummer != null &
-                    amdObject.email != null &
-                    amdObject.wachtwoord != null &
-                    amdObject.trainNiveau != null &
-                    (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-                    aanmeldVersturen(aanmeldingJSON);
-                    console.log(aanmeldingJSON);
-                    setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
-                } else {
-                    alert("Niet alle velden zijn ingevuld")
-                }
-            } else if (document.getElementById("coach").checked == true){
-                if (amdObject.voornaam != null &
-                    amdObject.achternaam != null &
-                    amdObject.geslacht != null &
-                    amdObject.geboortedatum != null &
-                    amdObject.telefoonnummer != null &
-                    amdObject.email != null &
-                    amdObject.wachtwoord != null &
-                    (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-                    aanmeldVersturen(aanmeldingJSON);
-                    console.log(aanmeldingJSON);
-                    setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
-                } else {
-                    alert("Niet alle velden zijn ingevuld")
-                }
-            } else {
-                alert("Niet alle velden zijn ingevuld")
-            }
+        })
+        //     function getLeden() {
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.onreadystatechange = function () {
+        //         if (this.readyState == 4) {
+        //             var informatieLid = JSON.parse(this.responseText);
+        //             console.log(informatieLid)
+        //         }
+        //     }
+        //     xhr.open("GET", "http://localhost:8082/ledenlijst/vindlid/5" , true)
+        //     xhr.send();
+        // }
+            
+            
+        
+        // $(window).on('load', function () {
+        //     getLeden();
+        // })
 
-
-
-            function aanmeldVersturen(data) {
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4) {
-                        console.log("het is verstuurd")
-                    }
-                }
-                xhr.open("POST", "http://localhost:8082/aanmelding", true);
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.send(data);
-
-            }
-
-        }
-
-        function cancellen() {
-            window.location.href = 'index.html';
-        }
-
+        // 
+        // console.log(document.getElementById("voornaam").value);
     </script>
 </head>
 
 <body>
-    <h2 class="text-center">Aanmeldformulier</h2>
+    <h2 class="text-center">Update lid</h2>
 
     <form class="form-horizontal" class="was-validated">
         <div class="form-group">
