@@ -118,7 +118,7 @@
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
                     console.log(aanmeldingJSON);
-                    setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
+                    //setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -136,7 +136,7 @@
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
                     console.log(aanmeldingJSON);
-                    setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
+                    //setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -152,7 +152,7 @@
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
                     console.log(aanmeldingJSON);
-                    setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
+                    //setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -167,7 +167,7 @@
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
                     console.log(aanmeldingJSON);
-                    setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
+                    //setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -182,6 +182,7 @@
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         console.log("het is verstuurd")
+                        window.location.href = 'bedanktAanmelding.html';
                     }
                 }
                 xhr.open("POST", "http://localhost:8082/aanmelding", true);

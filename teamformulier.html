@@ -54,7 +54,6 @@
             var teamObject = {};
 
             teamObject.teamnaam = document.getElementById("teamnaam").value;
-            teamObject.trainer = document.getElementById("trainer").value;
             teamObject.competitie = krijgCompetitie();
             teamObject.coach = document.getElementById("coach").value;
             teamObject.teamType = krijgTeamtype();
@@ -69,23 +68,19 @@
             if (teamObject.competitie == true) {
                 console.log("competite klopt")
                 if (teamObject.teamnaam != "" &
-                    teamObject.trainer != "" &
                     teamObject.coach != "" &
                     teamObject.teamType != null &
                     teamObject.niveau != null) {
                     teamVersturen(teamJSON);
-                    window.location.href = 'bevestigingTeamaanmaak.html';
                 } else {
                     alert("niet alle velden zijn ingevuld")
                 }
             } else {
                 console.log("competitie niet")
-                if (teamObject.teamnaam != "" &
-                    teamObject.trainer != "") {
+                if (teamObject.teamnaam != "")  {
                     teamVersturen(teamJSON);
-                    window.location.href = 'bevestigingTeamaanmaak.html';
-                } else {
-                    alert("trainer of teamnaam is niet ingevuld")
+                    } else {
+                    alert("teamnaam is niet ingevuld")
                 }
             }
 
@@ -95,6 +90,7 @@
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         console.log("team is verstuurd")
+                        window.location.href = 'bevestigingTeamaanmaak.html';
                     }
                 }
                 xhr.open("POST", "http://localhost:8082/team", true);
@@ -121,10 +117,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="trainer">Trainer:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="trainer" placeholder="Vul naam trainer in" required>
-            </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="competitie">Competitie:</label>
