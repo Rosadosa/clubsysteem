@@ -13,37 +13,126 @@
             box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
         }
     </style>
-        
-        
+
+
 
     <script>
         $(window).on('load', function () {
             informatieLid = {};
-            localStorage.getItem("informatielid", this.responseText)
+            informatieLid = JSON.parse(localStorage.getItem("informatielid", this.responseText));
             console.log(localStorage.getItem("informatielid", this.responseText));
-            console.log(informatieLid.voornaam);
-            
-        })
-        //     function getLeden() {
-        //     var xhr = new XMLHttpRequest();
-        //     xhr.onreadystatechange = function () {
-        //         if (this.readyState == 4) {
-        //             var informatieLid = JSON.parse(this.responseText);
-        //             console.log(informatieLid)
-        //         }
-        //     }
-        //     xhr.open("GET", "http://localhost:8082/ledenlijst/vindlid/5" , true)
-        //     xhr.send();
-        // }
-            
-            
-        
-        // $(window).on('load', function () {
-        //     getLeden();
-        // })
+            document.getElementById("voornaam").value = informatieLid.voornaam;
+            document.getElementById("achternaam").value = informatieLid.achternaam;
 
-        // 
-        // console.log(document.getElementById("voornaam").value);
+            if (informatieLid.speler == true) {
+                document.getElementById("speler").checked = true;
+            }
+
+            if (informatieLid.trainer == true) {
+                document.getElementById("trainer").checked = true;
+            }
+
+            if (informatieLid.coach == true) {
+                document.getElementById("coach").checked = true;
+
+            }
+
+            checkPositie(informatieLid.posities);
+            checkNiveau(informatieLid.niveau);
+
+        })
+
+        function checkPositie(input) {
+            for (var i = 0; i < input.length; i++) {
+                document.getElementById("" + input.substring(i, i + 1) + "").checked = true;
+            }
+        }
+
+        function checkNiveau(input) {
+            document.getElementById(input).checked = true;
+        }
+
+        function krijgPositie() {
+            var ele = document.getElementsByName('positie');
+            var positie_string = "";
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked) {
+                    positie_string = positie_string.concat(ele[i].value);
+                }
+            }
+            return positie_string;
+        }
+
+        function krijgNiveau() {
+            var ele = document.getElementsByName('niveau')
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    return ele[i].value;
+            }
+        }
+
+        function krijgRollen(input) {
+            if (document.getElementById(input).checked == true) {
+                return true;
+            } else { return false; }
+        }
+
+        function updateAanmelding() {
+
+            var rollen = [];
+            if (document.getElementById("speler").checked == true)
+                rollen.push("speler");
+            if (document.getElementById("coach").checked == true)
+                rollen.push("coach");
+            if (document.getElementById("trainer").checked == true)
+                rollen.push("trainer");
+
+            var amdObject = {};
+
+            amdObject.voornaam = document.getElementById("voornaam").value;
+            amdObject.achternaam = document.getElementById("achternaam").value;
+            amdObject.posities = krijgPositie();
+            amdObject.niveau = krijgNiveau();
+            // amdObject.trainNiveau = krijgTrainNiveau();
+            amdObject.coach = krijgRollen("coach");
+            amdObject.trainer = krijgRollen("trainer");
+            amdObject.speler = krijgRollen("speler");
+
+            var aanmeldingJSON = JSON.stringify(amdObject);
+
+
+            if (amdObject.voornaam != null &
+                amdObject.achternaam != null &
+                amdObject.posities != "" &
+                amdObject.niveau != null &
+                (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
+                updateVersturen(aanmeldingJSON);
+                console.log(aanmeldingJSON)
+            } else {
+                alert("Er is een leeg veld ingevoerd")
+            }
+        }
+
+        function updateVersturen(data) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    console.log("het is geupdate")
+                    window.location.href = 'bedanktUpdate.html';
+                }
+            }
+            xhr.open("PATCH", "http://localhost:8082/ledenlijst", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(data);
+
+        }
+
+        function cancellen() {
+            window.location.href = 'index.html';
+        }
+
+
+
     </script>
 </head>
 
@@ -64,63 +153,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="geslacht">Geslacht:</label>
-            <div class="col-sm-10">
-                <div class="radio">
-                    <label for="man"><input type="radio" name="geslacht" value="man" required> Man</label>
-                </div>
-                <div class="radio">
-                    <label for="vrouw"><input type="radio" name="geslacht" value="vrouw" required> Vrouw</label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="geboortedatum">Geboortedatum:</label>
-            <div class="col-sm-10">
-                <input type="date" class="form-control" id="geboortedatum" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="telefoonnummer">Telefoonnummer:</label>
-            <div class="col-sm-10">
-                <input type="tel" class="form-control" id="telefoonnummer" placeholder="Vul telefoonnummer in" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="email">E-mail adres:</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" placeholder="Vul e-mail adres in" required>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="wachtwoord">Wachtwoord:</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="wachtwoord" placeholder="Voer een wachtwoord in"
-                    required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="bevestigwachtwoord">Bevestig wachtwoord:</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="bevestigwachtwoord" placeholder="Bevestig wachtwoord"
-                    required>
-            </div>
-        </div>
-
-        <div class="form-group">
             <label class="control-label col-sm-2" for="rollen">Wat wil je doen binnen de club?:</label>
             <div class="col-sm-10">
                 <div class="checkbox">
-                    <label for="speler"><input type="checkbox" name="rollen" id="speler"
-                            onclick="spelerCheck()">Speler</label>
+                    <label for="speler"><input type="checkbox" name="rollen" id="speler">Speler</label>
                 </div>
                 <div class="checkbox">
-                    <label for="trainer"><input type="checkbox" name="rollen" id="trainer" onclick="trainerCheck()">Trainer</label>
+                    <label for="trainer"><input type="checkbox" name="rollen" id="trainer">Trainer</label>
                 </div>
                 <div class="checkbox">
                     <label for="coach"><input type="checkbox" name="rollen" id="coach">Coach</label>
@@ -128,71 +167,72 @@
             </div>
         </div>
 
-        <div id="select" style="display:none">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="positie">Voorkeurspositie:</label>
-            <div class="col-sm-10">
-                <div class="checkbox">
-                    <label for="spelverdeler"><input type="checkbox" id="spelverdeler" value="S" name="positie">
-                        Spelverdeler</label>
+        <div id="select">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="positie">Voorkeurspositie:</label>
+                <div class="col-sm-10">
+                    <div class="checkbox">
+                        <label for="spelverdeler"><input type="checkbox" id="S" value="S" name="positie">
+                            Spelverdeler</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="passerloper"><input type="checkbox" id="P" value="P" name="positie"> Passer
+                            Loper</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="midden"><input type="checkbox" id="M" value="M" name="positie"> Midden</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="diagonaal"><input type="checkbox" id="D" value="D" name="positie">
+                            Diagonaal</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="libero"><input type="checkbox" id="L" value="L" name="positie"> Libero</label>
+                    </div>
+                    <div class="checkbox">
+                        <label for="geenvoorkeur"><input type="checkbox" id="G" value="geen voorkeur" name="positie">
+                            Geen
+                            Voorkeur</label>
+                    </div>
                 </div>
-                <div class="checkbox">
-                    <label for="passerloper"><input type="checkbox" id="passerloper" value="P" name="positie"> Passer
-                        Loper</label>
-                </div>
-                <div class="checkbox">
-                    <label for="midden"><input type="checkbox" id="midden" value="M" name="positie"> Midden</label>
-                </div>
-                <div class="checkbox">
-                    <label for="diagonaal"><input type="checkbox" id="diagonaal" value="D" name="positie">
-                        Diagonaal</label>
-                </div>
-                <div class="checkbox">
-                    <label for="libero"><input type="checkbox" id="libero" value="L" name="positie"> Libero</label>
-                </div>
-                <div class="checkbox">
-                    <label for="geenvoorkeur"><input type="checkbox" id="G" value="geen voorkeur" name="positie"> Geen
-                        Voorkeur</label>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="niveau">Gewenste speelniveau:</label>
+                <div class="col-sm-10">
+                    <div class="radio">
+                        <label for="hoofdklasse"><input type="radio" name="niveau" id="hoofd klasse">
+                            Hoofdklasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="promotieklasse"><input type="radio" name="niveau" id="promotie klasse"> Promotie
+                            Klasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="eersteklasse"><input type="radio" name="niveau" id="1e klasse"> 1e
+                            Klasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="tweedeklasse"><input type="radio" name="niveau" id="2e klasse"> 2e
+                            Klasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="derdeklasse"><input type="radio" name="niveau" id="3e klasse"> 3e Klasse</label>
+                    </div>
+                    <div class="radio">
+                        <label for="nooit"><input type="radio" name="niveau" id="nooit"> Nog nooit eerder
+                            gevolleybald,
+                            dus ik weet het niet</label>
+                    </div>
+                    <div class="radio">
+                        <label for="jeugd"><input type="radio" name="niveau" id="jeugd"> Jeugd</label>
+                    </div>
                 </div>
             </div>
         </div>
 
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="niveau">Gewenste speelniveau:</label>
-            <div class="col-sm-10">
-                <div class="radio">
-                    <label for="hoofdklasse"><input type="radio" name="niveau" value="hoofd klasse">
-                        Hoofdklasse</label>
-                </div>
-                <div class="radio">
-                    <label for="promotieklasse"><input type="radio" name="niveau" value="promotie klasse"> Promotie
-                        Klasse</label>
-                </div>
-                <div class="radio">
-                    <label for="eersteklasse"><input type="radio" name="niveau" value="1e klasse"> 1e
-                        Klasse</label>
-                </div>
-                <div class="radio">
-                    <label for="tweedeklasse"><input type="radio" name="niveau" value="2e klasse"> 2e
-                        Klasse</label>
-                </div>
-                <div class="radio">
-                    <label for="derdeklasse"><input type="radio" name="niveau" value="3e klasse"> 3e Klasse</label>
-                </div>
-                <div class="radio">
-                    <label for="nooit"><input type="radio" name="niveau" value="nooit"> Nog nooit eerder
-                        gevolleybald,
-                        dus ik weet het niet</label>
-                </div>
-                <div class="radio">
-                    <label for="jeugd"><input type="radio" name="niveau" value="jeugd"> Jeugd</label>
-                </div>
-            </div>
-        </div>
-        </div>
-
-        <div id="trainselect" style="display:none">
+        <!-- <div id="trainselect">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="niveau">Gewenste trainniveau:</label>
                 <div class="col-sm-10">
@@ -223,11 +263,11 @@
                 </div>
             </div>
 
-        </div>
+        </div> -->
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-primary" onclick="aanmelding()">Verstuur</button>
+                <button type="button" class="btn btn-primary" onclick="updateAanmelding()">Update lid</button>
                 <button type="button" class="btn btn-primary" onclick="cancellen()">Annuleer</button>
             </div>
         </div>
