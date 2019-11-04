@@ -72,7 +72,7 @@
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         var leden = JSON.parse(this.responseText);
-                        createTableSelectie(leden)
+                        createTableSelectie(leden);
                     }
                 }
                 xhr.open("GET", pagina, true)
@@ -83,7 +83,7 @@
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         var leden = JSON.parse(this.responseText);
-                        createTableSelectie(leden)
+                        createTable(leden, ledenlijst.id);
                     }
                 }
                 xhr.open("GET", pagina, true)
@@ -135,15 +135,30 @@
                     tabCell.innerHTML = leden_array[i][col[j]];
                     tabCell.id = col[j];
                 }
-                tr.onclick = function () {
-                    if (typeof index !== "undefined") {
-                        table.rows[index].classList.toggle("selected");
+
+                if (table.id == "ledenlijst") {
+                    tr.onclick = function () {
+                        if (typeof index !== "undefined") {
+                            table.rows[index].classList.toggle("selected");
+                        }
+                        index = this.rowIndex
+                        this.classList.toggle("selected");
+                        lid = this.cells[0].innerHTML
                     }
-                    index = this.rowIndex
-                    this.classList.toggle("selected");
-                    lid = this.cells[0].innerHTML
+                } else {
+
+                    tr.onclick = function () {
+                        if (typeof index !== "undefined") {
+                            table.rows[index].classList.toggle("selected");
+                        }
+                        index = this.rowIndex
+                        this.classList.toggle("selected");
+                        team = this.cells[0].innerHTML
+                    }
+
                 }
             }
+
             var divContainer = document.getElementById("ledenlijst");
             divContainer.innerHTML = "";
             divContainer.appendChild(table);
