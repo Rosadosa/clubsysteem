@@ -16,6 +16,8 @@
     </style>
 
     <script>
+        var basisUrl = "http://localhost:8083";
+
         function home() {
             window.location.href = 'index.html'
         }
@@ -64,7 +66,7 @@
 
         function getLeden(ledenlijst) {
             if (document.getElementById("trainerCoach").textContent == "trainer") {
-                var pagina = "http://localhost:8082/trainerslijst/1";
+                var pagina = basisUrl + "/trainerslijst/1";
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
@@ -75,7 +77,7 @@
                 xhr.open("GET", pagina, true)
                 xhr.send();
             } else if (document.getElementById("trainerCoach").textContent == "coach"){
-                var pagina = "http://localhost:8082/coachlijst/1";
+                var pagina = basisUrl + "/coachlijst/1";
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
@@ -96,7 +98,7 @@
                     createTable(teams, teamlijst.id);
                 }
             }
-            xhr.open("GET", "http://localhost:8082/teamlijst", true)
+            xhr.open("GET", basisUrl + "/teamlijst", true)
             xhr.send();
         }
 
@@ -223,7 +225,7 @@
             if (document.getElementById("trainerCoach").textContent == "Trainer") {
                 console.log("trainer");
                 var rol = "Trainer"
-                url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
+                url = basisUrl + "/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
@@ -236,7 +238,7 @@
             } else if (document.getElementById("trainerCoach").textContent == "Coach") {
                 console.log("Coach");
                 var rol = "Coach";
-                url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
+                url = basisUrl + "/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {

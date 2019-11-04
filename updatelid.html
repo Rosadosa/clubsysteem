@@ -17,6 +17,8 @@
 
 
     <script>
+        var basisUrl = "http://localhost:8083";
+
         $(window).on('load', function () {
             informatieLid = {};
             informatieLid = JSON.parse(localStorage.getItem("informatielid", this.responseText));
@@ -30,6 +32,7 @@
 
             if (informatieLid.trainer == true) {
                 document.getElementById("trainer").checked = true;
+                checkTrainNiveau(informatieLid.trainNiveau);
             }
 
             if (informatieLid.coach == true) {
@@ -40,7 +43,18 @@
             checkPositie(informatieLid.posities);
             checkNiveau(informatieLid.niveau);
 
+
         })
+
+        function checkTrainNiveau(input) {
+            document.getElementById(input).checked = true
+        }
+
+        function trainerCheck() {
+            $('[id="trainer"]').on('change', function () {
+                $('#trainselect').toggle(this.checked);
+            }).change();
+        }
 
         function checkPositie(input) {
             for (var i = 0; i < input.length; i++) {
@@ -49,6 +63,7 @@
         }
 
         function checkNiveau(input) {
+            console.log(input);
             document.getElementById(input).checked = true;
         }
 
@@ -64,17 +79,32 @@
         }
 
         function krijgNiveau() {
+            var speelniveau = "";
             var ele = document.getElementsByName('niveau')
             for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked)
-                    return ele[i].value;
+                if (ele[i].checked) {
+                    speelniveau = ele[i].value;
+                }
             }
+            console.log("speelniveau" + speelniveau);
+            return speelniveau;
         }
 
         function krijgRollen(input) {
             if (document.getElementById(input).checked == true) {
                 return true;
             } else { return false; }
+        }
+
+        function krijgTrainNiveau() {
+            var trainniveau = "";
+            var ele = document.getElementsByName('trainniveau')
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked)
+                    trainniveau = ele[i].value;
+            }
+            console.log("trainniveau" + trainniveau);
+            return trainniveau;
         }
 
         function updateAanmelding() {
@@ -89,39 +119,69 @@
 
             var amdObject = {};
 
+            amdObject.id = informatieLid.id;
             amdObject.voornaam = document.getElementById("voornaam").value;
             amdObject.achternaam = document.getElementById("achternaam").value;
             amdObject.posities = krijgPositie();
             amdObject.niveau = krijgNiveau();
-            // amdObject.trainNiveau = krijgTrainNiveau();
+            amdObject.trainniveau = krijgTrainNiveau();
             amdObject.coach = krijgRollen("coach");
             amdObject.trainer = krijgRollen("trainer");
             amdObject.speler = krijgRollen("speler");
 
             var aanmeldingJSON = JSON.stringify(amdObject);
+            updateVersturen(aanmeldingJSON);
 
-
-            if (amdObject.voornaam != null &
-                amdObject.achternaam != null &
-                amdObject.posities != "" &
-                amdObject.niveau != null &
-                (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-                updateVersturen(aanmeldingJSON);
-                console.log(aanmeldingJSON)
-            } else {
-                alert("Er is een leeg veld ingevoerd")
-            }
+            // if (document.getElementById("speler").checked == true) {
+            //     if (amdObject.voornaam != null &
+            //         amdObject.achternaam != null &
+            //         amdObject.posities != "" &
+            //         amdObject.niveau != null &
+            //         (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
+            //         updateVersturen(aanmeldingJSON);
+            //         console.log(aanmeldingJSON)
+            //     } else {
+            //         alert("Er is een leeg veld ingevoerd")
+            //     }
+            // }else if ((document.getElementById("speler").checked == true) & (document.getElementById("trainer").checked == true)){
+            //     if (amdObject.voornaam != null &
+            //         amdObject.achternaam != null &
+            //         amdObject.posities != "" &
+            //         amdObject.niveau != null &
+            //         amdObject.trainNiveau != null
+            //         (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
+            //         updateVersturen(aanmeldingJSON);
+            //         console.log(aanmeldingJSON)
+            //     } else {
+            //         alert("Er is een leeg veld ingevoerd")
+            //     }    
+            // } else if (document.getElementById("trainer").checked == true) {
+            //     if (amdObject.trainNiveau != null &
+            //         amdObject.voornaam != null &
+            //         amdObject.achternaam != null &
+            //         amdObject.posities != "" &
+            //         amdObject.trainNiveau != null &
+            //         (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
+            //         updateVersturen(aanmeldingJSON);
+            //         console.log(aanmeldingJSON)
+            //     } else {
+            //         alert("Er is een leeg veld ingevoerd")
+            //     }
+            // } else {
+            //     alert("Er is een leeg veld ingevoerd")
+            // }
         }
+
 
         function updateVersturen(data) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     console.log("het is geupdate")
-                    window.location.href = 'bedanktUpdate.html';
+                    //window.location.href = 'bedanktUpdate.html';
                 }
             }
-            xhr.open("PATCH", "http://localhost:8082/ledenlijst", true);
+            xhr.open("PATCH", basisUrl + "/ledenlijst", true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(data);
 
@@ -159,7 +219,8 @@
                     <label for="speler"><input type="checkbox" name="rollen" id="speler">Speler</label>
                 </div>
                 <div class="checkbox">
-                    <label for="trainer"><input type="checkbox" name="rollen" id="trainer">Trainer</label>
+                    <label for="trainer"><input type="checkbox" name="rollen" id="trainer"
+                            onclick="trainerCheck()">Trainer</label>
                 </div>
                 <div class="checkbox">
                     <label for="coach"><input type="checkbox" name="rollen" id="coach">Coach</label>
@@ -202,37 +263,40 @@
                 <label class="control-label col-sm-2" for="niveau">Gewenste speelniveau:</label>
                 <div class="col-sm-10">
                     <div class="radio">
-                        <label for="hoofdklasse"><input type="radio" name="niveau" id="hoofd klasse">
+                        <label for="hoofdklasse"><input type="radio" name="niveau" id="hoofd klasse"
+                                value="hoofd klasse">
                             Hoofdklasse</label>
                     </div>
                     <div class="radio">
-                        <label for="promotieklasse"><input type="radio" name="niveau" id="promotie klasse"> Promotie
+                        <label for="promotieklasse"><input type="radio" name="niveau" id="promotie klasse"
+                                value="promotie klasse"> Promotie
                             Klasse</label>
                     </div>
                     <div class="radio">
-                        <label for="eersteklasse"><input type="radio" name="niveau" id="1e klasse"> 1e
+                        <label for="eersteklasse"><input type="radio" name="niveau" id="1e klasse" value="1e klasse"> 1e
                             Klasse</label>
                     </div>
                     <div class="radio">
-                        <label for="tweedeklasse"><input type="radio" name="niveau" id="2e klasse"> 2e
+                        <label for="tweedeklasse"><input type="radio" name="niveau" id="2e klasse" value="2e klasse"> 2e
                             Klasse</label>
                     </div>
                     <div class="radio">
-                        <label for="derdeklasse"><input type="radio" name="niveau" id="3e klasse"> 3e Klasse</label>
+                        <label for="derdeklasse"><input type="radio" name="niveau" id="3e klasse" value="3e klasse"> 3e
+                            Klasse</label>
                     </div>
                     <div class="radio">
-                        <label for="nooit"><input type="radio" name="niveau" id="nooit"> Nog nooit eerder
+                        <label for="nooit"><input type="radio" name="niveau" id="nooit" value="nooit"> Nog nooit eerder
                             gevolleybald,
                             dus ik weet het niet</label>
                     </div>
                     <div class="radio">
-                        <label for="jeugd"><input type="radio" name="niveau" id="jeugd"> Jeugd</label>
+                        <label for="jeugd"><input type="radio" name="niveau" id="jeugd" value="jeugd"> Jeugd</label>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- <div id="trainselect">
+        <div id="trainselect" style="display:none">
             <div class="form-group">
                 <label class="control-label col-sm-2" for="niveau">Gewenste trainniveau:</label>
                 <div class="col-sm-10">
@@ -263,7 +327,8 @@
                 </div>
             </div>
 
-        </div> -->
+        </div>
+
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

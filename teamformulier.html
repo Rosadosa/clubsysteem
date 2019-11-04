@@ -12,6 +12,7 @@
 
     </style>
     <script>
+        var basisUrl = "http://localhost:8083";
 
         function krijgCompetitie() {        
             
@@ -93,7 +94,7 @@
                         window.location.href = 'bevestigingTeamaanmaak.html';
                     }
                 }
-                xhr.open("POST", "http://localhost:8082/team", true);
+                xhr.open("POST", basisUrl + "/team", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(data);
             }
