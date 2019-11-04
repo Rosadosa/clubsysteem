@@ -9,6 +9,10 @@
         .btn-primary {
             background-color: darkcyan;
         }
+
+        .selected {
+            background-color: yellow;
+        }
     </style>
 
     <script>
@@ -41,9 +45,30 @@
             window.location.href = 'contact.html';
         }
 
+        function verwijsPagina(url) {
+            window.location.href = url;
+        }
+
         $(window).on('load', function () {
             getLeden();
         })
+
+        function updateLid() {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:8082/ledenlijst/vindlid/" + lid + "", true)
+                xhr.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var informatieLid = JSON.parse(this.responseText);
+                        console.log(informatieLid);
+                        localStorage.setItem("informatielid", this.response);
+                        verwijsPagina('updatelid.html');  
+                    }
+                }
+                
+                xhr.send();          
+        }
+
+
 
         function getLeden() {
             var xhr = new XMLHttpRequest();
@@ -84,11 +109,34 @@
                     var tabCell = tr.insertCell(-1);
                     tabCell.innerHTML = leden_array[i][col[j]];
                 }
+                tr.onclick = function () {
+                    if (typeof index !== "undefined") {
+                        table.rows[index].classList.toggle("selected");
+                    }
+                    index = this.rowIndex
+                    this.classList.toggle("selected");
+                    lid = this.cells[0].innerHTML;
+                }
             }
             var divContainer = document.getElementById("showData");
             divContainer.innerHTML = "";
             divContainer.appendChild(table);
         }
+
+        function verwijderLid() {
+            url = "http://localhost:8082/ledenlijst/" + lid + "";
+            console.log(url);
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    console.log("lid is verwijderd")
+                }
+            }
+            xhr.open("DELETE", url, true)
+            xhr.send();
+            window.location.reload();
+        }
+
     </script>
 </head>
 
@@ -114,7 +162,9 @@
                         <ul class="dropdown-menu">
                             <li><a href="#" onclick="maakTeam()">Maak een team</a></li>
                             <li><a href="#" onclick="teamOverzicht()">Team overzicht</a></li>
-                            <li><a href="#" onclick="teamLedenLijst()">Voeg mensen toe aan teams</a></li>
+                            <li><a href="#" onclick="teamLedenLijst()">Voeg speler toe aan teams</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamCoachTrainerLijst.html')">Voeg trainer/coach toe aan
+                                teams</a></li>
                         </ul>
                     </li>
                     <li><a href="#" onclick="wedstrijd()">Wedstrijdinformatie</a></li>
@@ -134,10 +184,15 @@
                 <h2> Ledenoverzicht </h2>
                 <br></br>
             </div>
-            
+
         </div>
         <div class="row">
             <div type="divContainer" id="showData"></div>
+        </div>
+        <br></br>
+        <button type="button" class="btn btn-primary" onclick="updateLid()">Update geselecteerde lid</button>
+        <button type="button" class="btn btn-primary" onclick="verwijderLid()">Verwijder geselecteerde lid</button>
+    </div>
 </body>
 
 </html>

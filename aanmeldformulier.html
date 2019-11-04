@@ -86,7 +86,7 @@
             amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
             amdObject.email = document.getElementById("email").value;
             amdObject.wachtwoord = document.getElementById("wachtwoord").value;
-            amdObject.positie = krijgPositie();
+            amdObject.posities = krijgPositie();
             amdObject.niveau = krijgNiveau();
             amdObject.trainNiveau=krijgTrainNiveau();
             amdObject.coach = krijgRollen("coach");
@@ -102,9 +102,9 @@
                 amdObject.wachtwoord = document.getElementById("wachtwoord").value;
                 var aanmeldingJSON = JSON.stringify(amdObject);
             }
-            console.log(amdObject);
+    
 
-            console.log(aanmeldingJSON);
+            
             if (document.getElementById("speler").checked == true){
                 if (amdObject.voornaam != null &
                     amdObject.achternaam != null &
@@ -113,12 +113,11 @@
                     amdObject.telefoonnummer != null &
                     amdObject.email != null &
                     amdObject.wachtwoord != null &
-                    amdObject.positie != "" &
+                    amdObject.posities != "" &
                     amdObject.niveau != null &
-                    // amdObject.trainNiveau != null &
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
-                    window.location.href = 'bedanktAanmelding.html';
+                    console.log(aanmeldingJSON);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -130,12 +129,12 @@
                     amdObject.telefoonnummer != null &
                     amdObject.email != null &
                     amdObject.wachtwoord != null &
-                    amdObject.positie != "" &
+                    amdObject.posities != "" &
                     amdObject.niveau != null &
                     amdObject.trainNiveau != null &
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
-                    window.location.href = 'bedanktAanmelding.html';
+                    console.log(aanmeldingJSON);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -150,7 +149,8 @@
                     amdObject.trainNiveau != null &
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
-                    window.location.href = 'bedanktAanmelding.html';
+                    console.log(aanmeldingJSON);
+                    //setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -164,7 +164,8 @@
                     amdObject.wachtwoord != null &
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
-                    window.location.href = 'bedanktAanmelding.html';
+                    console.log(aanmeldingJSON);
+                    //setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -179,6 +180,7 @@
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         console.log("het is verstuurd")
+                        window.location.href = 'bedanktAanmelding.html';
                     }
                 }
                 xhr.open("POST", "http://localhost:8082/aanmelding", true);
