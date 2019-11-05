@@ -14,7 +14,11 @@
         }
     </style>
     <script>
-        var basisUrl = "http://localhost:8083";
+        var basisUrl = "http://173.212.208.199:8083/";
+
+        function verwijsPagina(url){
+            window.location.href = url;
+        }    
 
         function krijgGeslacht() {
             var ele = document.getElementsByName('geslacht');
@@ -70,7 +74,6 @@
         }
 
         function aanmelding() {
-
             var rollen = [];
             if (document.getElementById("speler").checked == true)
                 rollen.push("speler");
@@ -80,7 +83,6 @@
                 rollen.push("trainer");
 
             var amdObject = {};
-
             amdObject.voornaam = document.getElementById("voornaam").value;
             amdObject.achternaam = document.getElementById("achternaam").value;
             amdObject.geslacht = krijgGeslacht();
@@ -95,7 +97,6 @@
             amdObject.trainer = krijgRollen("trainer");
             amdObject.speler = krijgRollen("speler");
 
-
             if (wachtwoord.value != bevestigwachtwoord.value) {
                 alert("Bevestig wachtwoord en wachtwoord zijn verschillend");
                 wachtwoord.value = "";
@@ -104,8 +105,6 @@
                 amdObject.wachtwoord = document.getElementById("wachtwoord").value;
                 var aanmeldingJSON = JSON.stringify(amdObject);
             }
-    
-
             
             if (document.getElementById("speler").checked == true){
                 if (amdObject.voornaam != null &
@@ -152,7 +151,6 @@
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
                     console.log(aanmeldingJSON);
-                    //setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -167,7 +165,6 @@
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
                     console.log(aanmeldingJSON);
-                    //setTimeout(window.location.href = 'bedanktAanmelding.html', 100000);
                 } else {
                     alert("Niet alle velden zijn ingevuld")
                 }
@@ -181,22 +178,15 @@
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
-                        console.log("het is verstuurd")
-                        window.location.href = 'bedanktAanmelding.html';
+                        console.log("Aanmelding is verstuurd")
+                        verwijspagina('bedanktAanmelding.html');
                     }
                 }
                 xhr.open("POST", basisUrl + "/aanmelding", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(data);
-
             }
-
         }
-
-        function cancellen() {
-            window.location.href = 'index.html';
-        }
-
     </script>
 </head>
 
@@ -381,7 +371,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-primary" onclick="aanmelding()">Verstuur</button>
-                <button type="button" class="btn btn-primary" onclick="cancellen()">Annuleer</button>
+                <button type="button" class="btn btn-primary" onclick="verwijsPagina('index.html')">Annuleer</button>
             </div>
         </div>
     </form>
