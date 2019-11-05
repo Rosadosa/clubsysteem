@@ -137,14 +137,14 @@
                     tabCell.id = col[j];
                 }
 
-                if (table.id == "ledenlijst") {
+                if (table.id == "teamlijst") {
                     tr.onclick = function () {
                         if (typeof index !== "undefined") {
                             table.rows[index].classList.toggle("selected");
                         }
                         index = this.rowIndex
                         this.classList.toggle("selected");
-                        lid = this.cells[0].innerHTML
+                        team = this.cells[0].innerHTML
                     }
                 } else {
 
@@ -154,7 +154,7 @@
                         }
                         index = this.rowIndex
                         this.classList.toggle("selected");
-                        team = this.cells[0].innerHTML
+                        lid = this.cells[0].innerHTML
                     }
 
                 }
