@@ -24,49 +24,13 @@
     </style>
 
     <script>
-        function home(){
-            window.location.href = 'index.html'
-        }
-        function aanmelden() {
-            window.location.href = 'aanmeldformulier.html';
-        }
-        function inloggen() {
-            window.location.href = 'inloggen.html';
-        }
-        function teamOverzicht() {
-            window.location.href = 'teamlijst.html';
-        }
-        function maakTeam(){
-            window.location.href = 'teamformulier.html'; 
-        }
-        function teamLedenLijst(){
-            window.location.href = 'spelerEnTeamLijst.html';
-        }
-        function wedstrijd() {
-            window.location.href = 'wedstrijd.html';
-        }
-        function training() {
-            window.location.href = 'http://localhost:4200/?';
-        }
-        function contact() {
-            window.location.href = 'contact.html';
-        }
-        function ledenLijst(){
-            window.location.href = 'ledenlijst.html';
-        }
-        function zoekniveau(){
-            window.location.href = 'selectieLedenlijst.html'
-        }
-
         function verwijsPagina(url){
             window.location.href = url;
         }
-
     </script>
 </head>
 
 <body style=background-color:lightyellow>
-
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -80,23 +44,23 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#" onclick="home()">Home</a></li>
-                    <li><a href="#" onclick="aanmelden()">Aanmelden bij de club</a></li>
+                    <li class="active"><a href="#" onclick="verwijsPagina('index.html')">Home</a></li>
+                    <li><a href="#" onclick="verwijsPagina('aanmeldformulier.html')">Aanmelden bij de club</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaminformatie<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" onclick="maakTeam()">Maak een team</a></li>
-                            <li><a href="#" onclick="teamOverzicht()">Team overzicht</a></li>
-                            <li><a href="#" onclick="teamLedenLijst()">Voeg speler toe aan teams</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamformulier.html')">Maak een team</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamlijst.html')">Team overzicht</a></li>
+                            <li><a href="#" onclick="verwijsPagina('spelerEnTeamLijst.html')">Voeg speler toe aan teams</a></li>
                             <li><a href="#" onclick="verwijsPagina('teamCoachTrainerLijst.html')">Voeg trainer/coach toe aan
                                 teams</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" onclick="wedstrijd()">Wedstrijdinformatie</a></li>
-                    <li><a href="#" onclick="training()">Trainingsinformatie</a></li>
+                    <li><a href="#" onclick="verwijsPagina('ledenlijst.html')">Ledenlijst</a></li>
+                    <li><a href="#" onclick="verwijsPagina('training.html')">Trainingsinformatie</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" onclick="inloggen()"><span class="glyphicon glyphicon-log-in"></span> Inloggen</a>
+                    <li><a href="#" onclick="verwijsPagina('inloggen.html')"><span class="glyphicon glyphicon-log-in"></span> Inloggen</a>
                     </li>
                 </ul>
             </div>
@@ -106,8 +70,6 @@
     <div class="container-fluid text-center">
         <div class="row content">
             <div class="col-sm-2 sidenav">
-                <p><a href="#" onclick="ledenLijst()">Zie de huidige ledenlijst</a></p>
-                <p><a href="#" onclick="zoekniveau()">Zoek spelers op niveau en geslacht</a></p>
             </div>
             <div class="col-sm-8 text-left">
                 <h1>Welkom bij de club!</h1>
@@ -129,7 +91,7 @@
 
 
     <footer class="container-fluid text-center">
-        <p onclick="contact()">Contact</p>
+        <p onclick="verwijsPagina('contact.html')">Contact</p>
     </footer>
 
 
