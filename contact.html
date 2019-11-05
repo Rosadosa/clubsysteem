@@ -5,25 +5,25 @@
 
 <head>
     <style>
-       .btn-primary{
+        .btn-primary {
             background-color: darkcyan;
         }
+
         .btn-primary:hover {
             box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
         }
     </style>
 
     <script>
-        function cancellen() {
-            window.location.href = 'index.html';
-            console.log("terug naar home")
+        function verwijsPagina(url) {
+            window.location.href = url;
         }
     </script>
 </head>
 
 
 <body>
-    <input type="button" class="btn btn-primary" value="Annuleren" onclick="cancellen()">
+    <input type="button" class="btn btn-primary" value="Annuleren" onclick="verwijsPagina('index.html')">
 </body>
 
 </html>

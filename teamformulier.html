@@ -6,19 +6,21 @@
 
 <head>
     <style>
-    .btn-primary{
-        background-color: darkcyan;
-    }
-
+        .btn-primary {
+            background-color: darkcyan;
+        }
     </style>
     <script>
-        var basisUrl = "http://localhost:8083";
+        var basisUrl = "http://173.212.208.199:8083/";
 
-        function krijgCompetitie() {        
-            
+        function verwijsPagina(url) {
+            window.location.href = url;
+        }
+
+        function krijgCompetitie() {
             if (document.getElementById("ja").checked == true) {
-                 return true;
-             } else { return false; }
+                return true;
+            } else { return false; }
         }
 
         function krijgTeamtype() {
@@ -39,15 +41,12 @@
         }
 
         function competitieCheck() {
-
             $('[id="ja"]').on('change', function () {
                 $('#select').toggle(this.checked);
-                }).change();
+            }).change();
             $('[id="nee"]').click(function () {
                 $('#select').slideUp();
             })
-
-
         }
 
 
@@ -58,13 +57,8 @@
             teamObject.competitie = krijgCompetitie();
             teamObject.teamType = krijgTeamtype();
             teamObject.niveau = krijgNiveau();
-
             var teamJSON = JSON.stringify(teamObject);
-
-            console.log(teamObject);
-            console.log(teamJSON);
-
-
+            
             if (teamObject.competitie == true) {
                 console.log("competite klopt")
                 if (teamObject.teamnaam != "" &
@@ -76,9 +70,9 @@
                 }
             } else {
                 console.log("competitie niet")
-                if (teamObject.teamnaam != "")  {
+                if (teamObject.teamnaam != "") {
                     teamVersturen(teamJSON);
-                    } else {
+                } else {
                     alert("teamnaam is niet ingevuld")
                 }
             }
@@ -89,19 +83,14 @@
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         console.log("team is verstuurd")
-                        window.location.href = 'bevestigingTeamaanmaak.html';
+                        verwijsPagina('bevestigingTeamaanmaak.html');
                     }
                 }
                 xhr.open("POST", basisUrl + "/team", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(data);
             }
-
         }
-        function cancellen() {
-            window.location.href = 'index.html';
-        }
-
     </script>
 </head>
 
@@ -121,10 +110,12 @@
             <label class="control-label col-sm-2" for="competitie">Competitie:</label>
             <div class="col-sm-10">
                 <div class="radio">
-                    <label for="ja"><input type="radio" name="competitie" id="ja" value="ja" onclick="competitieCheck()"> Ja </label>
+                    <label for="ja"><input type="radio" name="competitie" id="ja" value="ja"
+                            onclick="competitieCheck()"> Ja </label>
                 </div>
                 <div class="radio">
-                    <label for="nee"><input type="radio" name="competitie" id="nee" value="nee" onclick="competitieCheck()"> Nee </label>
+                    <label for="nee"><input type="radio" name="competitie" id="nee" value="nee"
+                            onclick="competitieCheck()"> Nee </label>
                 </div>
             </div>
         </div>
@@ -173,7 +164,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-primary" onclick="aanmaakTeam()">Maak team aan</button>
-                <button type="button" class="btn btn-primary" onclick="cancellen()">Annuleer</button>
+                <button type="button" class="btn btn-primary" onclick="verwijsPagina('index.html')">Annuleer</button>
             </div>
         </div>
 
