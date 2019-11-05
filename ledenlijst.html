@@ -52,10 +52,12 @@
         $(window).on('load', function () {
             getLeden();
         })
+        
+        var basisUrl = "http://localhost:8083";
 
         function updateLid() {
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", "http://localhost:8082/ledenlijst/vindlid/" + lid + "", true)
+                xhr.open("GET", basisUrl + "/ledenlijst/vindlid/" + lid + "", true)
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         var informatieLid = JSON.parse(this.responseText);
@@ -75,10 +77,10 @@
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     var leden = JSON.parse(this.responseText);
-                    createTable(leden)
+                    createTable(leden);
                 }
             }
-            xhr.open("GET", "http://localhost:8082/ledenlijst", true)
+            xhr.open("GET", basisUrl + "/ledenlijst", true)
             xhr.send();
         }
 
@@ -124,7 +126,7 @@
         }
 
         function verwijderLid() {
-            url = "http://localhost:8082/ledenlijst/" + lid + "";
+            url = basisUrl + "/ledenlijst/" + lid + "";
             console.log(url);
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {

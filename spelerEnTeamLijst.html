@@ -52,6 +52,8 @@
             getTeams(teamlijst);
         })
 
+        var basisUrl = "http://localhost:8083";
+
         $(document).ready(function () {
             $('.dropdown').each(function (key, dropdown) {
                 var $dropdown = $(dropdown);
@@ -71,7 +73,7 @@
                     createTable(leden, ledenlijst.id)
                 }
             }
-            xhr.open("GET", "http://localhost:8082/spelerslijst/" + speler + "", true)
+            xhr.open("GET", basisUrl + "/spelerslijst/" + speler + "", true)
             xhr.send();
         }
 
@@ -83,7 +85,7 @@
                     createTable(teams, teamlijst.id);
                 }
             }
-            xhr.open("GET", "http://localhost:8082/teamlijst", true)
+            xhr.open("GET", basisUrl + "/teamlijst", true)
             xhr.send();
         }
 
@@ -99,7 +101,7 @@
                         createTableSelectie(selectieNiveauGeslacht);
                     }
                 }
-                xhr.open("GET", "http://localhost:8082/spelerslijst/niveaugeslacht" + api, true)
+                xhr.open("GET", basisUrl + "/spelerslijst/niveaugeslacht" + api, true)
                 xhr.send();
             } else if (document.getElementById("niveau").textContent != "Alle niveaus" & document.getElementById("geslacht").textContent == "Man en Vrouw" & document.getElementById("positie").textContent == "Alle posities") {
                 var keuzeniveau = document.getElementById("niveau").textContent;
@@ -111,7 +113,7 @@
                         createTableSelectie(selectieNiveau);
                     }
                 }
-                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekniveau/" + keuzeniveau + "", true)
+                xhr.open("GET", basisUrl + "/spelerslijst/zoekniveau/" + keuzeniveau + "", true)
                 xhr.send();
             } else if (document.getElementById("geslacht").textContent != "Man en Vrouw" & document.getElementById("niveau").textContent == "Alle niveaus" & document.getElementById("positie").textContent == "Alle posities") {
                 var keuzegeslacht = document.getElementById("geslacht").textContent;
@@ -123,7 +125,7 @@
                         createTableSelectie(selectieGeslacht);
                     }
                 }
-                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekgeslacht/" + keuzegeslacht + "", true)
+                xhr.open("GET", basisUrl + "/spelerslijst/zoekgeslacht/" + keuzegeslacht + "", true)
                 xhr.send();
             } else if (document.getElementById("positie").textContent != "Alle posities" & document.getElementById("geslacht").textContent == "Man en Vrouw" & document.getElementById("niveau").textContent == "Alle niveaus") {
                 var keuzePositie = document.getElementById("positie").textContent.substring(0, 1);
@@ -135,7 +137,7 @@
 
                     }
                 }
-                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekpositie/" + keuzePositie + "", true)
+                xhr.open("GET", basisUrl + "/spelerslijst/zoekpositie/" + keuzePositie + "", true)
                 xhr.send();
 
             } else if (document.getElementById("geslacht").textContent != "Man en Vrouw" & document.getElementById("positie").textContent != "Alle posities" & document.getElementById("niveau").textContent == "Alle niveaus") {
@@ -149,7 +151,7 @@
                         createTableSelectie(selectieGeslachtPositie);
                     }
                 }
-                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekpositiegeslacht/" + keuzegeslacht + "/" + keuzepositie + "", true)
+                xhr.open("GET", basisUrl + "/spelerslijst/zoekpositiegeslacht/" + keuzegeslacht + "/" + keuzepositie + "", true)
                 xhr.send();
             } else if (document.getElementById("niveau").textContent != "Alle niveaus" & document.getElementById("positie").textContent != "Alle posities" & document.getElementById("geslacht").textContent == "Man en Vrouw") {
                 alert("niveau + posities")
@@ -163,7 +165,7 @@
                         createTableSelectie(selectieNiveauPositie);
                     }
                 }
-                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekniveauposities/" + keuzeniveau + "/" + keuzepositie + "", true)
+                xhr.open("GET", basisUrl + "/spelerslijst/zoekniveauposities/" + keuzeniveau + "/" + keuzepositie + "", true)
                 xhr.send();
             } else if (document.getElementById("niveau").textContent == "Alle niveaus" & document.getElementById("positie").textContent == "Alle posities" & document.getElementById("geslacht").textContent == "Man en Vrouw") {
                 getLeden(ledenlijst);
@@ -178,7 +180,7 @@
                         createTableSelectie(selectieCombinatie);
                     }
                 }
-                xhr.open("GET", "http://localhost:8082/spelerslijst/zoekcombo/" + geslacht + "/" + niveau + "/" + positie + "", true)
+                xhr.open("GET", basisUrl + "/spelerslijst/zoekcombo/" + geslacht + "/" + niveau + "/" + positie + "", true)
                 xhr.send();
             }
         }
@@ -223,7 +225,7 @@
                         }
                         index = this.rowIndex
                         this.classList.toggle("selected");
-                        team = this.cells[0].innerHTML
+                        lid = this.cells[0].innerHTML
                     }
                 } else {
 
@@ -233,7 +235,7 @@
                         }
                         index = this.rowIndex
                         this.classList.toggle("selected");
-                        lid = this.cells[0].innerHTML
+                        team = this.cells[0].innerHTML
                     }
 
                 }
@@ -305,7 +307,7 @@
 
         function lidNaarTeam() {
             var rol = "Speler";
-            url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
+            url = basisUrl + "/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {

@@ -11,6 +11,8 @@
     </style>
 
     <script>
+        var basisUrl = "http://localhost:8083";
+
         function home(){
             window.location.href = 'index.html'
         }
@@ -58,7 +60,7 @@
                     console.log("hij laad nog een keer")
                 }
             }
-            xhr.open("GET", "http://localhost:8082/teamlijst", true)
+            xhr.open("GET", basisUrl + "/teamlijst", true)
             xhr.send();
         }
 

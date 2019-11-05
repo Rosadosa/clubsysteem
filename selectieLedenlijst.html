@@ -15,6 +15,8 @@
     </style>
 
     <script>
+        var basisUrl = "http://localhost:8083";
+
         function home() {
             window.location.href = 'index.html'
         }
@@ -71,7 +73,7 @@
             var geefNiveau = "2eklasse";
             var geefGeslacht = "vrouw";
 
-            xhr.open("GET", "http://localhost:8082/ledenlijst/niveaugeslacht" + api, true)
+            xhr.open("GET", basisUrl + "/ledenlijst/niveaugeslacht" + api, true)
             xhr.send();
         }
 

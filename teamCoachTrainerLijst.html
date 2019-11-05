@@ -16,6 +16,8 @@
     </style>
 
     <script>
+        var basisUrl = "http://localhost:8083";
+
         function home() {
             window.location.href = 'index.html'
         }
@@ -48,7 +50,7 @@
         }
 
         $(window).on('load', function () {
-            getLeden(ledenlijst);
+            getLeden();
             getTeams(teamlijst);
         })
 
@@ -62,31 +64,32 @@
         });
 
 
-        function getLeden(ledenlijst) {
-            if (document.getElementById("trainerCoach").textContent == "trainer") {
-                var pagina = "http://localhost:8082/trainerslijst/1";
+        function getLeden() {
+            if (document.getElementById("trainerCoach").textContent == "Trainer") {
+                console.log("trainer");
+                var pagina = basisUrl + "/trainerslijst/true";
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         var leden = JSON.parse(this.responseText);
-                        createTable(leden, ledenlijst.id)
+                        createTableSelectie(leden);
                     }
                 }
                 xhr.open("GET", pagina, true)
                 xhr.send();
-            } else if (document.getElementById("trainerCoach").textContent == "coach"){
-                var pagina = "http://localhost:8082/coachlijst/1";
+            } else if (document.getElementById("trainerCoach").textContent == "Coach") {
+                var pagina = basisUrl + "/coachlijst/true";
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         var leden = JSON.parse(this.responseText);
-                        createTable(leden, ledenlijst.id)
+                        createTable(leden, ledenlijst.id);
                     }
                 }
                 xhr.open("GET", pagina, true)
                 xhr.send();
             }
-       }
+        }
 
         function getTeams(teamlijst) {
             var xhr = new XMLHttpRequest();
@@ -97,7 +100,7 @@
                     createTable(teams, teamlijst.id);
                 }
             }
-            xhr.open("GET", "http://localhost:8082/teamlijst", true)
+            xhr.open("GET", basisUrl + "/teamlijst", true)
             xhr.send();
         }
 
@@ -141,7 +144,7 @@
                         }
                         index = this.rowIndex
                         this.classList.toggle("selected");
-                        team = this.cells[0].innerHTML
+                        lid = this.cells[0].innerHTML
                     }
                 } else {
 
@@ -151,7 +154,7 @@
                         }
                         index = this.rowIndex
                         this.classList.toggle("selected");
-                        lid = this.cells[0].innerHTML
+                        team = this.cells[0].innerHTML
                     }
 
                 }
@@ -161,6 +164,7 @@
             divContainer.innerHTML = "";
             divContainer.appendChild(table);
         }
+
 
         function createTable(leden_array, naam) {
             var col = [];
@@ -224,12 +228,13 @@
             if (document.getElementById("trainerCoach").textContent == "Trainer") {
                 console.log("trainer");
                 var rol = "Trainer"
-                url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
+                url = basisUrl + "/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
+                console.log(url);
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         console.log("persoon toegevoegd!");
-                        window.location.reload();
+                        //window.location.reload();
                     }
                 }
                 xhr.open("GET", url, true)
@@ -237,12 +242,13 @@
             } else if (document.getElementById("trainerCoach").textContent == "Coach") {
                 console.log("Coach");
                 var rol = "Coach";
-                url = "http://localhost:8082/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
+                url = basisUrl + "/lidtoevoegenteam/" + lid + "/" + team + "/" + rol + "";
+                console.log(url);
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         console.log("persoon toegevoegd!");
-                        window.location.reload();
+                        // window.location.reload();
                     }
                 }
                 xhr.open("GET", url, true)
@@ -250,10 +256,8 @@
             } else {
                 console.log("trainer en coach")
             }
-
-
-
         }
+
 
     </script>
 </head>
@@ -308,7 +312,8 @@
         </div>
         <h3>Zoek specifiek op trainer of coach</h3>
         <div class="btn-group dropdown">
-            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="trainerCoach"> Selecteer trainer of coach
+            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" id="trainerCoach">
+                Selecteer trainer of coach
                 <span class="caret"></span></button>
             <ul class="dropdown-menu">
                 <li><a href="#">Trainer</a></li>
@@ -317,7 +322,7 @@
             <br></br>
         </div>
         <div class="btn-group dropdown">
-            <button class="btn btn-primary" onclick=getLeden(ledenlijst)>Zoeken</button>
+            <button class="btn btn-primary" onclick=getLeden()>Zoeken</button>
             <br></br>
         </div>
         <div class="row">
