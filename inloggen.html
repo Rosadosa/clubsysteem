@@ -15,15 +15,9 @@
     </style>
 
     <script>
-        function inloggen() {
-            console.log("inlog")
+        function verwijsPagina(url) {
+            window.location.href = url;
         }
-
-        function cancellen() {
-            window.location.href = 'index.html';
-            console.log("terug naar home")
-        }
-
     </script>
 </head>
 
@@ -44,9 +38,9 @@
         </div>
 
         <div class="text-center">
-                <input type="button" class="btn btn-primary" value="Inloggen" onclick="inloggen()">
-                <input type="button" class="btn btn-primary" value="Annuleren" onclick="cancellen()">
-            </div>
+            <input type="button" class="btn btn-primary" value="Inloggen" onclick="verwijsPagina('inlog')">
+            <input type="button" class="btn btn-primary" value="Annuleren" onclick="verwijsPagina('index.html')">
+        </div>
     </form>
 </body>
 

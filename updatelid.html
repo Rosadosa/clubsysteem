@@ -17,7 +17,11 @@
 
 
     <script>
-        var basisUrl = "http://localhost:8083";
+        var basisUrl = "http://173.212.208.199:8083/";
+
+        function verwijsPagina(url) {
+            window.location.href = url;
+        }
 
         $(window).on('load', function () {
             informatieLid = {};
@@ -131,45 +135,6 @@
 
             var aanmeldingJSON = JSON.stringify(amdObject);
             updateVersturen(aanmeldingJSON);
-
-            // if (document.getElementById("speler").checked == true) {
-            //     if (amdObject.voornaam != null &
-            //         amdObject.achternaam != null &
-            //         amdObject.posities != "" &
-            //         amdObject.niveau != null &
-            //         (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-            //         updateVersturen(aanmeldingJSON);
-            //         console.log(aanmeldingJSON)
-            //     } else {
-            //         alert("Er is een leeg veld ingevoerd")
-            //     }
-            // }else if ((document.getElementById("speler").checked == true) & (document.getElementById("trainer").checked == true)){
-            //     if (amdObject.voornaam != null &
-            //         amdObject.achternaam != null &
-            //         amdObject.posities != "" &
-            //         amdObject.niveau != null &
-            //         amdObject.trainNiveau != null
-            //         (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-            //         updateVersturen(aanmeldingJSON);
-            //         console.log(aanmeldingJSON)
-            //     } else {
-            //         alert("Er is een leeg veld ingevoerd")
-            //     }    
-            // } else if (document.getElementById("trainer").checked == true) {
-            //     if (amdObject.trainNiveau != null &
-            //         amdObject.voornaam != null &
-            //         amdObject.achternaam != null &
-            //         amdObject.posities != "" &
-            //         amdObject.trainNiveau != null &
-            //         (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
-            //         updateVersturen(aanmeldingJSON);
-            //         console.log(aanmeldingJSON)
-            //     } else {
-            //         alert("Er is een leeg veld ingevoerd")
-            //     }
-            // } else {
-            //     alert("Er is een leeg veld ingevoerd")
-            // }
         }
 
 
@@ -177,8 +142,7 @@
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
-                    console.log("het is geupdate")
-                    //window.location.href = 'bedanktUpdate.html';
+                    verwijsPagina('bedanktUpdate.html');
                 }
             }
             xhr.open("PATCH", basisUrl + "/ledenlijst", true);
@@ -333,7 +297,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="button" class="btn btn-primary" onclick="updateAanmelding()">Update lid</button>
-                <button type="button" class="btn btn-primary" onclick="cancellen()">Annuleer</button>
+                <button type="button" class="btn btn-primary" onclick="verwijsPagina('index.html')">Annuleer</button>
             </div>
         </div>
     </form>
