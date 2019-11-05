@@ -31,10 +31,12 @@
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
-                    var teams = JSON.parse(this.responseText);
-                    console.log(teams);
-                    createButton(teams)
-                    console.log(teams.teamnaam);
+                    let teams = JSON.parse(this.response);
+                    let output = '';
+                    for (var i=0; i<teams.length; i++0) {
+                        output += '<li>' + teams.id + " " + teams.teamnaam; '</li>'
+                    }
+                    document.getElementById('teams').innerHTML = output;
                 }
             }
             xhr.open("GET", basisUrl + "/teamlijst", true)
@@ -165,6 +167,9 @@
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="team" placeholder="Vul het team in" required>
             </div>
+        </div>
+        <div>
+            <ul id="teams"></ul>
         </div>
         <div class="row">
             <div type="divContainer" id="showData"></div>
