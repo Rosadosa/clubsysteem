@@ -1,0 +1,79 @@
+<html>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    
+    <head>
+        <style>
+            .btn-primary {
+                background-color: darkcyan;
+            }
+    
+            .btn-primary:hover {
+                box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+            }
+        </style>
+
+        <script>
+
+        var basisUrl = "http://173.212.208.199:8083/";
+
+        function verwijsPagina(url){
+            window.location.href = url;
+        }    
+
+        function aanmaakTraining(){
+            var amdObject = {};
+            amdObject.dag = document.getElementById('dag').value;
+            amdObject.tijd = document.getElementById('tijdstip').value;
+            amdObject.locatie = 
+
+        }
+        </script>
+    
+    </head>
+    <body>
+        <h2 class="text-center">Maak training aan</h2>
+    
+        <form class="form-horizontal" class="was-validated">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dag">Dag:</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" id="dag" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="tijdstip">Tijdstip:</label>
+                <div class="col-sm-10">
+                    <input type="time" class="form-control" id="tijdstip" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="locatie">Locatie:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="locatie" placeholder="Vul locatie in" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="Aantal trainingen">Aantal trainingen:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="aantalTrainingen" placeholder="Vul aantal trainingen in" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="team">Team:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="team" placeholder="Vul het team in" required>
+                </div>
+            </div>   
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-primary" onclick="aanmaakTraining()">Maak training aan</button>
+                    <button type="button" class="btn btn-primary" onclick="verwijsPagina('index.html')">Annuleer</button>
+                </div>
+            </div>
+        </form>
+    
+    
+    </body>
+</html>
