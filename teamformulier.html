@@ -54,13 +54,13 @@
             var teamObject = {};
 
             teamObject.teamnaam = document.getElementById("teamnaam").value;
-            teamObject.competitie = krijgCompetitie();
+            teamObject.wedstrijd = krijgCompetitie();
             teamObject.teamType = krijgTeamtype();
             teamObject.niveau = krijgNiveau();
             var teamJSON = JSON.stringify(teamObject);
 
 
-            if (teamObject.competitie != null &
+            if (teamObject.wedstrijd != null &
                 teamObject.teamnaam != "" &
                 teamObject.teamType != null &
                 teamObject.niveau != null) {
