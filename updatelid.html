@@ -36,7 +36,7 @@
 
             if (informatieLid.trainer == true) {
                 document.getElementById("trainer").checked = true;
-                checkTrainNiveau(informatieLid.trainNiveau);
+                trainerCheck();
             }
 
             if (informatieLid.coach == true) {
@@ -46,7 +46,8 @@
 
             checkPositie(informatieLid.posities);
             checkNiveau(informatieLid.niveau);
-
+            console.log(informatieLid.trainNiveau);
+            checkTrainNiveau(informatieLid.trainNiveau);
 
         })
 
