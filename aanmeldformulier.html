@@ -73,6 +73,24 @@
             }).change();
         }
 
+        function geboortedatumChecker(datum) {
+            ingevoerd = new Date(datum);
+            ingevoerd.setHours(12,00)
+            console.log(ingevoerd);
+            nu = new Date();
+            console.log(nu);
+            if (nu - ingevoerd < 0){
+                alert("Je bent nog niet geboren. Klopt je geboortedatum wel?")
+                return;
+            } else if (Math.round((nu-ingevoerd)/(1000*60*60*24*365.35)) > 120) {
+                console.log(Math.round((nu-ingevoerd)/(1000*60*60*24*365.35)));
+                alert("Lijkt het je gezond om te volleyballen met jou leeftijd?")
+            } else {
+                console.log(Math.round((nu-ingevoerd)/(1000*60*60*24*365.35)))
+                return ingevoerd;
+            }
+        }
+
         function aanmelding() {
             var rollen = [];
             if (document.getElementById("speler").checked == true)
@@ -86,7 +104,8 @@
             amdObject.voornaam = document.getElementById("voornaam").value;
             amdObject.achternaam = document.getElementById("achternaam").value;
             amdObject.geslacht = krijgGeslacht();
-            amdObject.geboortedatum = document.getElementById("geboortedatum").value;
+            amdObject.geboortedatum = geboortedatumChecker(document.getElementById("geboortedatum").value);
+            console.log(amdObject.geboortedatum);
             amdObject.telefoonnummer = document.getElementById("telefoonnummer").value;
             amdObject.email = document.getElementById("email").value;
             amdObject.wachtwoord = document.getElementById("wachtwoord").value;
