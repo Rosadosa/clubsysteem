@@ -61,15 +61,23 @@
             }
         }
 
-
+        function checkdatum(datum) {
+            ingevoerd = new Date(datum);
+            ingevoerd.setHours(12,00);
+            nu = new Date();
+            if (nu - ingevoerd > 0){
+                alert("Datum is al geweest")
+                return;
+            } else {
+                return ingevoerd;
+            }
+        }
 
 
         function aanmaakTraining() {
             tijdstip = document.getElementById('uren').value + ":" + document.getElementById('minuten').value;
-            console.log(tijdstip);
-            console.log(value);
             var trainObject = {};
-            trainObject.dag = document.getElementById('dag').value;
+            trainObject.dag = checkdatum(document.getElementById('dag').value);
             trainObject.tijd = tijdstip;
             trainObject.plaats = document.getElementById('locatie').value;
 
@@ -79,9 +87,14 @@
             teamId = e.options[e.selectedIndex].value;
 
             var trainingJSON = JSON.stringify(trainObject);
-            console.log(trainingJSON);
 
-            trainVersturen(trainingJSON, aantalTrainingen, teamId);
+
+            if (trainObject.dag != null & trainObject.tijd != ":" & trainObject.plaats != ""){
+                trainVersturen(trainingJSON, aantalTrainingen, teamId);
+            } else {
+                alert("Niet alle velden zijn ingevuld.")
+            }
+            
 
             function trainVersturen(data, aantalTrainingen, teamId) {
                 var xhr = new XMLHttpRequest();
