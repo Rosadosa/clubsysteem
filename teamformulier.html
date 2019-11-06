@@ -19,8 +19,8 @@
 
         function krijgCompetitie() {
             if (document.getElementById("ja").checked == true) {
-                return true;
-            } else { return false; }
+                return "true";
+            } else { return "false"; }
         }
 
         function krijgTeamtype() {
@@ -58,7 +58,7 @@
             teamObject.teamType = krijgTeamtype();
             teamObject.niveau = krijgNiveau();
             var teamJSON = JSON.stringify(teamObject);
-
+            console.log(teamJSON);
 
             if (teamObject.wedstrijd != null &
                 teamObject.teamnaam != "" &
@@ -74,7 +74,6 @@
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (this.readyState == 4) {
-                        console.log("team is verstuurd")
                         verwijsPagina('bevestigingTeamaanmaak.html');
                     }
                 }

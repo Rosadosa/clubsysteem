@@ -28,13 +28,11 @@
         })
 
         function getTeams() {
-            console.log("hij laad")
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     var leden = JSON.parse(this.responseText);
                     createTable(leden)
-                    console.log("hij laad nog een keer")
                 }
             }
             xhr.open("GET", basisUrl + "/teamlijst", true)
