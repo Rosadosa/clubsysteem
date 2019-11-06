@@ -8,16 +8,22 @@
         .btn-primary {
             background-color: darkcyan;
         }
+
+        .selected {
+            background-color: yellow;
+        }
     </style>
 
     <script>
         var basisUrl = "http://173.212.208.199:8083/";
+        var trainingId;
+        var index;
 
-        function verwijsPagina(url){
+        function verwijsPagina(url) {
             window.location.href = url;
-        }    
+        }
 
-        $(window).on('load', function(){
+        $(window).on('load', function () {
             getTeams();
         })
 
@@ -36,7 +42,7 @@
         }
 
         function createTable(leden_array) {
-            
+
             var col = [];
             var table = document.createElement("table");
             table.className = "table table-bordered table-sm table-hover ";
@@ -63,64 +69,100 @@
                     var tabCell = tr.insertCell(-1);
                     tabCell.innerHTML = leden_array[i][col[j]];
                 }
+                tr.onclick = function () {
+                    if (typeof index !== "undefined") {
+                        table.rows[index].classList.toggle("selected");
+                    }
+                    index = this.rowIndex
+                    this.classList.toggle("selected");
+                    trainingId = this.cells[0].innerHTML;
+                }
             }
+
             var divContainer = document.getElementById("showData");
             divContainer.innerHTML = "";
             divContainer.appendChild(table);
         }
+
+        function verwijderTraining() {
+            url = basisUrl + "trainingen/" + trainingId + "";
+            console.log(url);
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    console.log("training is verwijderd")
+                    window.location.reload();
+                }
+            }
+            xhr.open("DELETE", url, true)
+            xhr.send();
+        }
+
+
     </script>
 </head>
 
 <body>
-        <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Logo</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#" onclick="verwijsPagina('index.html')">Home</a></li>
-                            <li><a href="#" onclick="verwijsPagina('aanmeldformulier.html')">Aanmelden bij de club</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaminformatie<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" onclick="verwijsPagina('teamformulier.html')">Maak een team</a></li>
-                                    <li><a href="#" onclick="verwijsPagina('teamlijst.html')">Team overzicht</a></li>
-                                    <li><a href="#" onclick="verwijsPagina('spelerEnTeamLijst.html')">Voeg speler toe aan teams</a></li>
-                                    <li><a href="#" onclick="verwijsPagina('teamCoachTrainerLijst.html')">Voeg trainer/coach toe aan
-                                        teams</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#" onclick="verwijsPagina('ledenlijst.html')">Ledenlijst</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Traininginformatie <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" onclick="verwijsPagina('trainingformulier.html')">Maak een training</a></li>
-                                    <li><a href="#" onclick="verwijsPagina('training.html')">Training overzicht</a></li>
-                                    <li><a href="#" onclick="verwijsPagina('spelerEnTraininglijst.html')">Voeg speler toe aan training</a></li>
-                                </ul>
-                            </li>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#" onclick="verwijsPagina('index.html')">Home</a></li>
+                    <li><a href="#" onclick="verwijsPagina('aanmeldformulier.html')">Aanmelden bij de club</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Teaminformatie<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="verwijsPagina('teamformulier.html')">Maak een team</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamlijst.html')">Team overzicht</a></li>
+                            <li><a href="#" onclick="verwijsPagina('spelerEnTeamLijst.html')">Voeg speler toe aan
+                                    teams</a></li>
+                            <li><a href="#" onclick="verwijsPagina('teamCoachTrainerLijst.html')">Voeg trainer/coach toe
+                                    aan
+                                    teams</a></li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#" onclick="verwijsPagina('inloggen.html')"><span class="glyphicon glyphicon-log-in"></span> Inloggen</a>
-                            </li>
+                    </li>
+                    <li><a href="#" onclick="verwijsPagina('ledenlijst.html')">Ledenlijst</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Traininginformatie <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="verwijsPagina('trainingformulier.html')">Maak een training</a></li>
+                            <li><a href="#" onclick="verwijsPagina('training.html')">Training overzicht</a></li>
+                            <li><a href="#" onclick="verwijsPagina('spelerEnTraininglijst.html')">Voeg speler toe aan
+                                    training</a></li>
                         </ul>
-                    </div>
-                </div>
-            </nav>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" onclick="verwijsPagina('inloggen.html')"><span
+                                class="glyphicon glyphicon-log-in"></span> Inloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2> Trainingen Overzicht </h2>
+                <br></br>
+            </div>
             <div class="row">
-                <div class="col-sm-6">
-                    <h2> Trainingen Overzicht </h2>
-                    <br></br>
-                </div>
-    <div type="divContainer" id="showData"></div>
+                <div type="divContainer" id="showData"></div>
+            </div>
+            <br></br>
+            <button type="button" class="btn btn-primary" onclick="verwijderTraining()">Verwijder geselecteerde
+                training</button>
 </body>
 
 </html>
