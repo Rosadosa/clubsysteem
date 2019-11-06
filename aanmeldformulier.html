@@ -111,7 +111,7 @@
             amdObject.wachtwoord = document.getElementById("wachtwoord").value;
             amdObject.posities = krijgPositie();
             amdObject.niveau = krijgNiveau();
-            amdObject.trainNiveau = krijgTrainNiveau();
+            amdObject.trainniveau = krijgTrainNiveau();
             amdObject.coach = krijgRollen("coach");
             amdObject.trainer = krijgRollen("trainer");
             amdObject.speler = krijgRollen("speler");
@@ -151,7 +151,7 @@
                     amdObject.wachtwoord != null &
                     amdObject.posities != "" &
                     amdObject.niveau != null &
-                    amdObject.trainNiveau != null &
+                    amdObject.trainniveau != null &
                     (amdObject.coach != false | amdObject.trainer != false | amdObject.speler != false)) {
                     aanmeldVersturen(aanmeldingJSON);
                     console.log(aanmeldingJSON);

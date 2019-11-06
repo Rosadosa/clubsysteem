@@ -17,7 +17,8 @@
 
     <script>
         var basisUrl = "http://173.212.208.199:8083/";
-
+        var index;
+        
         function verwijsPagina(url) {
             window.location.href = url;
         }
@@ -28,7 +29,7 @@
 
         function updateLid() {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", basisUrl + "/ledenlijst/vindlid/" + lid + "", true)
+            xhr.open("GET", basisUrl + "ledenlijst/vindlid/" + lid + "", true)
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     var informatieLid = JSON.parse(this.responseText);
@@ -51,7 +52,7 @@
                     createTable(leden);
                 }
             }
-            xhr.open("GET", basisUrl + "/ledenlijst", true)
+            xhr.open("GET", basisUrl + "ledenlijst", true)
             xhr.send();
         }
 
@@ -97,17 +98,17 @@
         }
 
         function verwijderLid() {
-            url = basisUrl + "/ledenlijst/" + lid + "";
+            url = basisUrl + "ledenlijst/" + lid + "";
             console.log(url);
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     console.log("lid is verwijderd")
+                    window.location.reload();
                 }
             }
             xhr.open("DELETE", url, true)
             xhr.send();
-            window.location.reload();
         }
 
     </script>
