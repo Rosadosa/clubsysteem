@@ -23,7 +23,7 @@
         var value;
         var index;
         var lidId;
-        var teamId;
+        var trainingId;
 
         $(window).on('load', function () {
             getLeden();
@@ -110,7 +110,7 @@
                     }
                     index = this.rowIndex
                     this.classList.toggle("selected");
-                    teamId = this.cells[8].innerHTML;
+                    trainingId = this.cells[0].innerHTML;
                 }
 
             }
@@ -123,8 +123,8 @@
             select = document.getElementById("leden");
             lidId = select.options[select.selectedIndex].value;
             console.log("lidId " + lidId);
-            console.log("teamId " + teamId)
-            url = basisUrl + "training/voegtoe/" + lidId + "/" + teamId + "";
+            console.log("teamId " + trainingId)
+            url = basisUrl + "training/voegtoe/" + lidId + "/" + trainingId + "";
             console.log("url: " + url);
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
