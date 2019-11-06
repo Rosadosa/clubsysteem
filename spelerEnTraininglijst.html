@@ -24,6 +24,10 @@
             getTrainingen();
         })
 
+        function verwijsPagina(url) {
+            window.location.href = url;
+        }
+        
         function getLeden() {
             teams = {}
             var xhr = new XMLHttpRequest();
@@ -41,8 +45,11 @@
 
             for (var i = 0; i < ledenlijst.length; i++) {
                 var x = ledenlijst[i];
+                console.log(x);
                 value = x.id;
-                index = x.naam + " Speler: " + x.isSpelerInTeam + " Trainer " + x.isTrainerInTeam;
+                console.log(x.naam);
+                console.log(x.isSpelerInTeam);
+                index = x.naam + ", Speler: " + x.isSpelerInTeam + ", Trainer: " + x.isTrainerInTeams;
                 var select = document.getElementById("leden");
                 select.options[select.options.length] = new Option(index, value);
             }
